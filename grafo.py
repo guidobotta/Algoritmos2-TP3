@@ -87,6 +87,7 @@ class Pila:
         return str(self.pila)
 
 
+
 class Grafo:
     """
     Clase Grafo implementada sobre lista de adyacencia
@@ -97,32 +98,87 @@ class Grafo:
         """Constructor de la clase grafo."""
         self.adyacentes = {}
 
-    def añadir_vertice(self, vert):
+    def agregar_vertice(self, nombre):
         """Recibe un vertice y lo agrega."""
-        self.adyacentes[vert] = None
+        self.adyacentes[nombre] = Vertice(nombre)
 
-    def añadir_arista(self, vert1, vert2):
+
+    def agregar_arista(self, nombre1, nombre2, peso):
         #Se puede hacer que recibe una tupla de dos vertices
         """"""
+        self.adyacentes[nombre1].agregar(nombre2, peso)
 
-    def eliminar_vertice(self, vert):
+    def eliminar_vertice(self, nombre):
         """Recibe un vertice y lo elimina."""
+        if nombre in self.adyacentes:
+            for v in self.adyacentes:
+                self.adyacentes[v].eliminar(nombre)
+            self.adyacentes.pop(nombre)
 
-    def eliminar_arista(self, vert1, vert2):
+    def eliminar_arista(self, nombre1, nombre2):
         """"""
+        self.adyacentes[nombre1].eliminar(nombre2)
+    def __str__(self):
 
-    def __iter__(self):
-        return _Iter_Grafo_(self.adyacentes)
+        return str(self.adyacentes)
 
-class _Iter_Grafo_:
-    """
-    Clase Iterador del Grafo.
-    """
 
-    def __init__(self, adyacentes):
+class Vertice:
+
+    def __init__(self, nombre):
+        """Constructor de la clase grafo."""
+        self.adyacentes = {}
+
+    def agregar(self, nombre, peso):
+        self.adyacentes[nombre] = peso
+
+    def eliminar(self, nombre):
+        if nombre in self.adyacentes:
+            self.adyacentes.pop(nombre)
+
+    def __str__(self):
+
+        return str(self.adyacentes)
 
 
 def comparacion(x, y):
     if x > y: return 1
     if x < y: return -1
     return 0
+
+def main():
+
+    grafo = Grafo()
+    grafo.agregar_vertice("A")
+    grafo.agregar_vertice("B")
+    grafo.agregar_vertice("C")
+    grafo.agregar_vertice("D")
+    grafo.agregar_vertice("E")
+    grafo.agregar_vertice("F")
+    grafo.agregar_arista("A","B", 1)
+    grafo.agregar_arista("B","A", 2)
+    grafo.agregar_arista("A","C", 3)
+    grafo.agregar_arista("C","E", 1)
+    grafo.agregar_arista("B","F", 2)
+    grafo.agregar_arista("F","D", 3)
+    grafo.agregar_arista("D","B", 1)
+    grafo.agregar_arista("D","A", 2)
+    grafo.agregar_arista("F","B", 3)
+    grafo.agregar_arista("E","A", 2)
+    grafo.agregar_arista("E","B", 3)
+
+    #print(grafo)
+    for v in grafo.adyacentes:
+        print(v + ":" + str(grafo.adyacentes[v]))
+
+
+
+    print("/" * 50)
+    #grafo.eliminar_vertice("B")
+    grafo.eliminar_arista("A", "B")
+
+    for v in grafo.adyacentes:
+        print(v + ":" + str(grafo.adyacentes[v]))
+    #print(grafo.adyacentes["A"])
+
+main()
