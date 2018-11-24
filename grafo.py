@@ -16,8 +16,8 @@ class Grafo:
         """
         if not vertice in self.vertices:
             self.vertices[vertice] = {}
-        #else:
-            #raise Exception()
+        else:
+            raise Exception()
 
     def agregar_arista(self, vertice_1, vertice_2, peso=None):
         """
@@ -29,8 +29,8 @@ class Grafo:
         """
         if (vertice_1 in self.vertices) and (vertice_2 in self.vertices):
             self.vertices[vertice_1][vertice_2] = peso
-        #else:
-            #raise Exception()
+        else:
+            raise Exception()
 
     def peso_union(self, vertice_1, vertice_2):
         """
@@ -40,7 +40,7 @@ class Grafo:
         if (vertice_1 in self.vertices) and (vertice_2 in self.vertices)\
         and (vertice_2 in self.vertices[vertice_1]):
             return self.vertices[vertice_1][vertice_2]
-        #raise Exception()
+        raise Exception()
 
     def obtener_adyacentes(self, vertice):
         """
@@ -48,8 +48,8 @@ class Grafo:
         """
         if vertice in self.vertices:
             return list(self.vertices[vertice])
-        #else:
-            #raise Exception()
+        else:
+            raise Exception()
 
     def eliminar_vertice(self, vertice):
         """
@@ -61,8 +61,8 @@ class Grafo:
                     self.vertices[v].pop(vertice)
                 except:
                     continue
-        #else:
-            #raise Exception()
+        else:
+            raise Exception()
 
     def eliminar_arista(self, vertice_1, vertice_2):
         """
@@ -71,8 +71,8 @@ class Grafo:
         if (vertice_1 in self.vertices) and (vertice_2 in self.vertices)\
         and (vertice_2 in self.vertices[vertice_1]):
             self.vertices[vectice_1].pop(vertice_2)
-        #else:
-            #raise Exception()
+        else:
+            raise Exception()
 
     def obtener_vertices(self):
         """
@@ -102,7 +102,7 @@ class _Iter_Grafo_:
         Inicializa un iterador de diccionarios.
         """
         self.iter = iter(vertices)
-         
+
     def __next__(self):
         """
         Itera a la siguiente clave del diccionario, en caso de no
