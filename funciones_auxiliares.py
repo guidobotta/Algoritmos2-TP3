@@ -14,17 +14,19 @@ def imprimir_resultado(camino):
         print(camino[a], end=" -> ")
     print(camino[len(camino)-1])
 
-def cargar_ciudades(archivo_1):
+def cargar_ciudades_y_aeropuertos(archivo_1):
     archivo = open(archivo_1)
     ciudades = {}
+    aeropuertos = {}
     for linea in archivo:
         linea = linea.replace('\n', '')
         separado = linea.split(",")
         if not separado[0] in ciudades:
             ciudades[separado[0]] = Ciudad()
         ciudades[separado[0]].agregar_aeropuerto(separado[1], separado[2], separado[3])
+        aeropuertos[separado[1]] = [separado[2], separado[3]]
     archivo.close()
-    return ciudades
+    return ciudades, aeropuertos
 
 def clave_vuelo(aeropuerto1, aeropuerto2):
     return aeropuerto1 + "|" + aeropuerto2

@@ -1,7 +1,7 @@
 #Funciones auxiliares
 from funciones_auxiliares import *
 
-ultima_ruta = None
+ultima_ruta = []
 
 _LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
@@ -13,6 +13,7 @@ def listar_operaciones():
         print(operacion)
 
 def camino_mas(comando, ciudades, vuelos):
+    ultima_ruta[:] = []
     linea = comando.split(",")
 
     grafo = armar_grafo(ciudades, vuelos, linea[0])
@@ -31,10 +32,12 @@ def camino_mas(comando, ciudades, vuelos):
             mejor_distancia = distancia
     print("Camino encontrado: ")
     imprimir_resultado(mejor_camino)
-    ultima_ruta = mejor_camino
+    for x in mejor_camino:
+        ultima_ruta.append(x)
     return
 
 def camino_escalas(comando, ciudades, vuelos):
+    ultima_ruta[:] = []
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
     grafo = armar_grafo(ciudades, vuelos, linea[0])
@@ -53,7 +56,8 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_distancia = distancia
     print("Camino encontrado: ")
     imprimir_resultado(mejor_camino)
-    ultima_ruta = mejor_camino
+    for x in mejor_camino:
+        ultima_ruta.append(x)
     return
 
 def centralidad(comando):
@@ -88,11 +92,56 @@ def itinerario_cultural(comando):
     """"""
     return
 
-def exportal_kml(comando):
-    
-    return
+def exportar_kml(comando, aeropuertos):
+    print(ultima_ruta)
+    encabezado = \
+    "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+    declaracion = "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n\
+        <Document>"
+    nombre = "\t\t<name>Ruta de vuelo</name>"
 
-def ejecutar(linea, ciudades, vuelos):
+    abrir_punto1 = "\t\t<Placemark>\n\
+                    <name>"
+    abrir_punto2 =  "\t\t    </name>\n\
+                    <Point>\n\
+                        <coordinates>"
+    cerrar_punto = "\t\t\t</coordinates>\n\
+                    </Point>\n\
+                </Placemark>"
+
+    abrir_linea = "\t\t<Placemark>\n\
+                    <LineString>\n\
+                        <coordinates>"
+
+    cerrar_linea =  "\t\t\t</coordinates>\n\
+                    </LineString>\n\
+                </Placemark>"
+
+    cerrar_documento = "\t</Document>\n\
+</kml>"
+    f= open(comando,"w+")
+    f.write(encabezado + "\n")
+    f.write(declaracion + "\n")
+    f.write(nombre + "\n")
+    for aeropuerto in ultima_ruta:
+        f.write(abrir_punto1 + "\n")
+        f.write("\t\t\t" + aeropuerto + "\n")
+        f.write(abrir_punto2 + "\n")
+        f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+        f.write(cerrar_punto + "\n")
+    anterior = None
+    for aeropuerto in ultima_ruta:
+        if not anterior:
+            anterior = aeropuerto
+            continue
+        f.write(abrir_linea + "\n")
+        f.write("\t\t\t\t" + str(aeropuertos[anterior][0]) + ", " + str(aeropuertos[anterior][1]) + " " + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+        f.write(cerrar_linea + "\n")
+    #linea
+    f.write(cerrar_documento + "\n")
+    f.close()
+
+def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """Recibe una linea y ejecuta la operación correspondiente.
     En caso de no recibir una operación correcta, levanta un error."""
     comando = linea.split(' ', 1)
@@ -107,7 +156,7 @@ def ejecutar(linea, ciudades, vuelos):
     elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos)
     elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
     elif (comando[0] == 'itinerario_cultural'): itinerario_cultural(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'exportal_kml'): exportal_kml(comando[1], ciudades, vuelos)
+    elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
     else: print("Error")
 
 
@@ -135,7 +184,7 @@ def main():
 
     entrada = sys.__stdin__
 
-    ciudades = cargar_ciudades(archivo_1)
+    ciudades, aeropuertos = cargar_ciudades_y_aeropuertos(archivo_1)
     vuelos = cargar_vuelos(archivo_2)
     if not ciudades or not vuelos: return False
     #Imprimir las ciudades y vuelos para debuguear
@@ -154,5 +203,5 @@ def main():
         if not linea:
             break
         linea = linea.replace('\n', '')
-        ejecutar(linea, ciudades, vuelos)
+        ejecutar(linea, ciudades, vuelos, aeropuertos)
 main()
