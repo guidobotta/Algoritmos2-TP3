@@ -1,7 +1,7 @@
 #Funciones auxiliares
 from funciones_auxiliares import *
 
-_ULTIMA_RUTA_ = [[]]
+ultima_ruta = []
 
 _LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
@@ -20,12 +20,16 @@ def camino_mas(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las
     ciudades y los vuelos.
     """
+    ultima_ruta[:] = []
     linea = comando.split(",")
 
     grafo = armar_grafo(ciudades, vuelos, linea[0])
 
     ciudad_origen = ciudades[linea[1]].ver_aeropuertos()
     ciudad_destino = ciudades[linea[2]].ver_aeropuertos()
+    #Es solo para debuguear
+    print("Aeropuertos ciudad origen: " + str(ciudad_origen))
+    print("Aeropuertos ciudad destino: " + str(ciudad_destino))
 
     mejor_distancia = math.inf
     for v in ciudad_origen:
@@ -33,16 +37,17 @@ def camino_mas(comando, ciudades, vuelos):
         if distancia < mejor_distancia:
             mejor_camino = camino
             mejor_distancia = distancia
-
+    print("Camino encontrado: ")
     imprimir_resultado(mejor_camino)
-
-    _ULTIMA_RUTA_[0] = mejor_camino
+    for x in mejor_camino:
+        ultima_ruta.append(x)
     return
 
 def camino_escalas(comando, ciudades, vuelos):
     """
     
     """
+    ultima_ruta[:] = []
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
     grafo = armar_grafo(ciudades, vuelos, linea[0])
@@ -61,7 +66,8 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_distancia = distancia
     print("Camino encontrado: ")
     imprimir_resultado(mejor_camino)
-    _ULTIMA_RUTA_[0] = mejor_camino
+    for x in mejor_camino:
+        ultima_ruta.append(x)
     return
 
 def centralidad(comando):
@@ -97,7 +103,7 @@ def itinerario_cultural(comando):
     return
 
 def exportar_kml(comando, aeropuertos):
-    ruta = _ULTIMA_RUTA_[0]
+    print(ultima_ruta)
     encabezado = \
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
     declaracion = "<kml xmlns=\"http://www.opengis.net/kml/2.2\">\n\
@@ -122,28 +128,28 @@ def exportar_kml(comando, aeropuertos):
                 </Placemark>"
 
     cerrar_documento = "\t</Document>\n\
-    </kml>"
-    with open(comando, 'w') as f:
-        f.write(encabezado + "\n")
-        f.write(declaracion + "\n")
-        f.write(nombre + "\n")
-        for aeropuerto in ruta:
-            f.write(abrir_punto1 + "\n")
-            f.write("\t\t\t" + aeropuerto + "\n")
-            f.write(abrir_punto2 + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
-            f.write(cerrar_punto + "\n")
-        anterior = None
-        for aeropuerto in ruta:
-            if not anterior:
-                anterior = aeropuerto
-                continue
-            f.write(abrir_linea + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[anterior][0]) + ", " + str(aeropuertos[anterior][1]) + " " + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
-            f.write(cerrar_linea + "\n")
-        #linea
-        f.write(cerrar_documento + "\n")
-        f.close()
+</kml>"
+    f= open(comando,"w+")
+    f.write(encabezado + "\n")
+    f.write(declaracion + "\n")
+    f.write(nombre + "\n")
+    for aeropuerto in ultima_ruta:
+        f.write(abrir_punto1 + "\n")
+        f.write("\t\t\t" + aeropuerto + "\n")
+        f.write(abrir_punto2 + "\n")
+        f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+        f.write(cerrar_punto + "\n")
+    anterior = None
+    for aeropuerto in ultima_ruta:
+        if not anterior:
+            anterior = aeropuerto
+            continue
+        f.write(abrir_linea + "\n")
+        f.write("\t\t\t\t" + str(aeropuertos[anterior][0]) + ", " + str(aeropuertos[anterior][1]) + " " + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+        f.write(cerrar_linea + "\n")
+    #linea
+    f.write(cerrar_documento + "\n")
+    f.close()
 
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """

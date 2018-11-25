@@ -9,12 +9,13 @@ import sys
 import math
 
 def imprimir_resultado(camino):
-    for a in range(len(camino)-1):
-        print(camino[a], end=" -> ")
+    for elem in range(len(camino)-1):
+        print(camino[elem], end=" -> ")
     print(camino[len(camino)-1])
 
-def cargar_ciudades(archivo):
+def cargar_ciudades_y_aeropuertos(archivo):
     ciudades = {}
+    aeropuertos = {}
     with open(archivo) as aeros_csv:
         for linea in aeros_csv:
             linea = linea.replace('\n', '')
@@ -22,7 +23,8 @@ def cargar_ciudades(archivo):
             if not separado[0] in ciudades:
                 ciudades[separado[0]] = Ciudad()
             ciudades[separado[0]].agregar_aeropuerto(separado[1], separado[2], separado[3])
-    return ciudades
+            aeropuertos[separado[1]] = [separado[2], separado[3]]
+    return ciudades, aeropuertos
 
 def clave_vuelo(aeropuerto1, aeropuerto2):
     return aeropuerto1 + "|" + aeropuerto2
