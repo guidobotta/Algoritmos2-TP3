@@ -8,6 +8,41 @@ from ciudad import *
 import sys
 import math
 
+def filtrar_infinitos(distancia):
+    for v in distancia:
+        if distancia[v] == math.inf: distancia.pop(v)
+
+
+def ordenar_vertices(distancia):
+    """Los vertices se ordenan 'solos' al pasarlos a una lista"""
+    lista = []
+    for v in distancia:
+        lista.insert(0, v)
+    print(lista)
+    return lista
+
+def centralidad_(grafo):
+    cent = {}
+    for v in grafo: cent[v] = 0
+    for v in grafo:
+        # hacia todos los demas vertices
+        distancia, padre = dijkstra(grafo, v)
+        cent_aux = {}
+        for w in grafo: cent_aux[w] = 0
+
+        filtrar_infinitos(distancia)
+        vertices_ordenados = ordenar_vertices(distancia)
+        for w in vertices_ordenados:
+            if w == v: continue
+            cent_aux[padre[w]] += 1 + cent_aux[w]
+        # le sumamos 1 a la centralidad de todos los vertices que se encuentren en
+        # el medio del camino
+        for w in grafo:
+            if w == v: continue
+            cent[w] += cent_aux[w]
+    return cent
+
+
 def imprimir_resultado(camino):
     for elem in range(len(camino)-1):
         print(camino[elem], end=" -> ")
