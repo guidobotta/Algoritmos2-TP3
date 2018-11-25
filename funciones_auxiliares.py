@@ -76,11 +76,15 @@ def cargar_vuelos(archivo):
 
 def armar_grafo(ciudades, vuelos, modo):
     grafo = Grafo()
-    indice = 0
-    if modo == "barato": indice = 1
+    indice = -1
+    if modo == "rapido": indice = 0
+    elif modo == "barato": indice = 1
+    
+    if modo == -1: raise Exception("Error en el modo")
 
     for c in ciudades:
         for aeropuerto in ciudades[c]: grafo.agregar_vertice(aeropuerto)
+            
     for v in vuelos:
         separado = v.split("|")
         grafo.agregar_arista(separado[0], separado[1], int(vuelos[v][indice]))

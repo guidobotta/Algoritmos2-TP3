@@ -22,7 +22,8 @@ def camino_mas(comando, ciudades, vuelos):
     """
     linea = comando.split(",")
 
-    grafo = armar_grafo(ciudades, vuelos, linea[0])
+    modo = linea[0]
+    grafo = armar_grafo(ciudades, vuelos, modo)
 
     ciudad_origen = ciudades[linea[1]].ver_aeropuertos()
     ciudad_destino = ciudades[linea[2]].ver_aeropuertos()
@@ -45,7 +46,7 @@ def camino_escalas(comando, ciudades, vuelos):
     """
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
-    grafo = armar_grafo(ciudades, vuelos, linea[0])
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
 
     ciudad_origen = ciudades[linea[0]].ver_aeropuertos()
     ciudad_destino = ciudades[linea[1]].ver_aeropuertos()
@@ -88,11 +89,12 @@ def nueva_aerolinea(comando):
     """"""
     return
 
-def recorrer_mundo(comando):
+def recorrer_mundo(comando, ciudades, vuelos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo 
     para visitar todas las ciudades del mundo, demorando lo menos posible.
     """
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
     
     return
 
@@ -206,22 +208,13 @@ def main():
 
     ciudades, aeropuertos = cargar_ciudades_y_aeropuertos(archivo_1)
     vuelos = cargar_vuelos(archivo_2)
-    if not ciudades or not vuelos: return False
-    #Imprimir las ciudades y vuelos para debuguear
-    """
-    for v in ciudades:
-        print(v + ":" + str(ciudades[v].ver_aeropuertos()))
-    print("/" * 50)
-
-    for x in vuelos:
-        print(x + ":" + str(vuelos[x]))
-
-    print("/" * 50)
-    """
+    if not ciudades or not vuelos: raise Exception("Fallo al cargar archivos")
+    
     while True:
         linea = entrada.readline()
         if not linea:
             break
         linea = linea.replace('\n', '')
         ejecutar(linea, ciudades, vuelos, aeropuertos)
+
 main()
