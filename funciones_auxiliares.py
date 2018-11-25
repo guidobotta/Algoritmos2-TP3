@@ -8,36 +8,33 @@ from ciudad import *
 import sys
 import math
 
-
 def imprimir_resultado(camino):
     for a in range(len(camino)-1):
         print(camino[a], end=" -> ")
     print(camino[len(camino)-1])
 
-def cargar_ciudades(archivo_1):
-    archivo = open(archivo_1)
+def cargar_ciudades(archivo):
     ciudades = {}
-    for linea in archivo:
-        linea = linea.replace('\n', '')
-        separado = linea.split(",")
-        if not separado[0] in ciudades:
-            ciudades[separado[0]] = Ciudad()
-        ciudades[separado[0]].agregar_aeropuerto(separado[1], separado[2], separado[3])
-    archivo.close()
+    with open(archivo) as aeros_csv:
+        for linea in aeros_csv:
+            linea = linea.replace('\n', '')
+            separado = linea.split(",")
+            if not separado[0] in ciudades:
+                ciudades[separado[0]] = Ciudad()
+            ciudades[separado[0]].agregar_aeropuerto(separado[1], separado[2], separado[3])
     return ciudades
 
 def clave_vuelo(aeropuerto1, aeropuerto2):
     return aeropuerto1 + "|" + aeropuerto2
 
-def cargar_vuelos(archivo_2):
-    archivo = open(archivo_2)
+def cargar_vuelos(archivo):
     vuelos = {}
-    for linea in archivo:
-        linea = linea.replace('\n', '')
-        separado = linea.split(",")
-        clave = clave_vuelo(separado[0], separado[1])
-        vuelos[clave] = (separado[2], separado[3], separado[4])
-    archivo.close()
+    with open(archivo) as vuelos_csv:
+        for linea in vuelos_csv:
+            linea = linea.replace('\n', '')
+            separado = linea.split(",")
+            clave = clave_vuelo(separado[0], separado[1])
+            vuelos[clave] = (separado[2], separado[3], separado[4])
     return vuelos
 
 def armar_grafo(ciudades, vuelos, modo):
@@ -52,7 +49,6 @@ def armar_grafo(ciudades, vuelos, modo):
         grafo.agregar_arista(separado[0], separado[1], int(vuelos[v][indice]))
         grafo.agregar_arista(separado[1], separado[0], int(vuelos[v][indice]))
     return grafo
-
 
 def comparacion(x, y):
     if x[1] < y[1]: return 1

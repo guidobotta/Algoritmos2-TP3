@@ -13,6 +13,13 @@ def listar_operaciones():
         print(operacion)
 
 def camino_mas(comando, ciudades, vuelos):
+    """
+    Recibe una linea de comandos de la siguiente forma:
+    "modo,ciudad_orignen,ciudad_destino"
+    El modo puede ser "rapido" o "barato".
+    También recibe dos diccionarios con la informacion de las
+    ciudades y los vuelos.
+    """
     linea = comando.split(",")
 
     grafo = armar_grafo(ciudades, vuelos, linea[0])
@@ -35,6 +42,9 @@ def camino_mas(comando, ciudades, vuelos):
     return
 
 def camino_escalas(comando, ciudades, vuelos):
+    """
+    
+    """
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
     grafo = armar_grafo(ciudades, vuelos, linea[0])
@@ -93,8 +103,10 @@ def exportal_kml(comando):
     return
 
 def ejecutar(linea, ciudades, vuelos):
-    """Recibe una linea y ejecuta la operación correspondiente.
-    En caso de no recibir una operación correcta, levanta un error."""
+    """
+    Recibe una linea y ejecuta la operación correspondiente.
+    En caso de no recibir una operación correcta, levanta un error.
+    """
     comando = linea.split(' ', 1)
     if (comando[0] == 'listar_operaciones'): listar_operaciones()
     elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)

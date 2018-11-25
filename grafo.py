@@ -42,7 +42,7 @@ class Grafo:
             return self.vertices[vertice_1][vertice_2]
         raise Exception()
 
-    def obtener_adyacentes(self, vertice):
+    def adyacentes(self, vertice):
         """
         Recibe un vertice y devuelve una lista de sus adyacentes.
         """
