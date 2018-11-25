@@ -10,11 +10,17 @@ import random
 import math
 
 def filtrar_infinitos(distancia):
+    """
+    Recibe una lista con distancias y elimina aquellas que
+    sean infinito.
+    """
     for v in distancia:
         if distancia[v] == math.inf: distancia.pop(v)
 
 def ordenar_vertices(distancia):
-    """Los vertices se ordenan 'solos' al pasarlos a una lista"""
+    """
+    Los vertices se ordenan 'solos' al pasarlos a una lista.
+    """
     lista = []
     for v in distancia:
         lista.insert(0, v)
@@ -22,6 +28,9 @@ def ordenar_vertices(distancia):
     return lista
 
 def centralidad_(grafo):
+    """
+
+    """
     cent = {}
     for v in grafo: cent[v] = 0
     for v in grafo:
@@ -43,11 +52,21 @@ def centralidad_(grafo):
     return cent
 
 def imprimir_resultado(camino):
+    """
+    Recibe un camino (elemento iterable), e imprime el
+    resultado del camino con formato.
+    """
     for elem in range(len(camino)-1):
         print(camino[elem], end=" -> ")
     print(camino[len(camino)-1])
 
 def cargar_ciudades_y_aeropuertos(archivo):
+    """
+    Recibe un archivo csv con vuelos con el formato:
+    'ciudad,codigo_aeropuerto,latitud,longitud'
+    y devuelve dos diccionario con la información cargada, uno de
+    ciudades y otro de aeropuertos.
+    """
     ciudades = {}
     aeropuertos = {}
     with open(archivo) as aeros_csv:
@@ -60,20 +79,28 @@ def cargar_ciudades_y_aeropuertos(archivo):
             aeropuertos[separado[1]] = [separado[2], separado[3]]
     return ciudades, aeropuertos
 
-def clave_vuelo(aeropuerto1, aeropuerto2):
-    return aeropuerto1 + "|" + aeropuerto2
-
 def cargar_vuelos(archivo):
+    """
+    Recibe un archivo csv con vuelos con el formato:
+    'aeropuerto_i,aeropuerto_j,tiempo_promedio,precio,cant_vuelos_entre_aeropuertos'
+    y devuelve un diccionario con la información cargada
+    """
     vuelos = {}
     with open(archivo) as vuelos_csv:
         for linea in vuelos_csv:
             linea = linea.replace('\n', '')
-            separado = linea.split(",")
-            clave = clave_vuelo(separado[0], separado[1])
-            vuelos[clave] = (separado[2], separado[3], separado[4])
+            info_vuelo = linea.split(",")
+            clave = info_vuelo[0] + "|" + info_vuelo[1]
+            vuelos[clave] = (info_vuelo[2], info_vuelo[3], info_vuelo[4])
     return vuelos
 
 def armar_grafo(ciudades, vuelos, modo):
+    """
+    Recibe un diccionario de ciudades y otro de vuelos, y el modo
+    en el que debe ser creado.
+    Devuelve un grafo con aeropuertos como vertices y el peso de las
+    aristas según el modo.
+    """
     grafo = Grafo()
     indice = -1
     if modo == "rapido": indice = 0
@@ -114,11 +141,19 @@ def vacaciones_aux(origen, vertice, grafo, recorrido, cantidad):
     return False
 
 def comparacion(x, y):
+    """
+    Compara dos elementos.
+    """
     if x[1] < y[1]: return 1
     if x[1] > y[1]: return -1
     return 0
 
 def reconstruir_camino(origen, destino, padre, distancia):
+    """
+    Recibe un vertice(origen), un vertice(destino), un diccionario
+    de padres, y un diccionario con distancias.
+    Devuelve el camino reconstruído y la distancia total.
+    """
     resultado = []
     distancia_total = distancia[destino]
     while destino != origen:
@@ -128,7 +163,10 @@ def reconstruir_camino(origen, destino, padre, distancia):
     return resultado, distancia_total
 
 def dijkstra(grafo, origen, ciudad_destino):
-
+    """
+    Recibe un grafo, un vertice origen y un vertice destino y 
+    aplica el algoritmos de dijkstra para encontrar el camino mínimo.
+    """
     dist = {}
     padre = {}
 
@@ -148,14 +186,19 @@ def dijkstra(grafo, origen, ciudad_destino):
     #Devolvemos algo acá?
 
 def bfs(grafo, origen, destino):
+    """
+    Recibe un grafo, un vertice origen y un vertice destino y aplica bfs.
+    """
     visitados = set()
     padres = {}
     orden = {}
     q = Cola()
+
     visitados.add(origen)
     padres[origen] = None
     orden[origen] = 0
     q.encolar(origen)
+    
     while not q.esta_vacia():
         v = q.desencolar()
         for w in grafo.adyacentes(v):
