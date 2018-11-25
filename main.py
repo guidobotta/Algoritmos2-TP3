@@ -75,9 +75,6 @@ def camino_escalas(comando, ciudades, vuelos):
 
     ciudad_origen = ciudades[linea[0]].ver_aeropuertos()
     ciudad_destino = ciudades[linea[1]].ver_aeropuertos()
-    #Es solo para debuguear
-    print(ciudad_origen)
-    print(ciudad_destino)
 
     mejor_distancia = math.inf
     for v in ciudad_origen:
@@ -85,7 +82,6 @@ def camino_escalas(comando, ciudades, vuelos):
         if distancia < mejor_distancia:
             mejor_camino = camino
             mejor_distancia = distancia
-    print("Camino encontrado: ")
     imprimir_resultado(mejor_camino)
     _ULTIMA_RUTA_[0] = mejor_camino
     return
@@ -187,8 +183,17 @@ def vacaciones(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
-    
-    return
+    comandos = comando.split(',')
+    grafo = armar_grafo(ciudades,vuelos, "rapido")
+    origen = random.choice(ciudades[comandos[0]].ver_aeropuertos())
+    cantidad = int(comandos[1])
+    recorrido = [origen]
+
+    if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
+        recorrido.append(origen)
+        imprimir_resultado(recorrido)
+    else:
+        print("No se encontró recorrido")
 
 def itinerario_cultural(comando, ciudades, vuelos):
     """

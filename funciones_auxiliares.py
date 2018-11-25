@@ -6,12 +6,12 @@ from pila import *
 from ciudad import *
 #Modulos de Python
 import sys
+import random
 import math
 
 def filtrar_infinitos(distancia):
     for v in distancia:
         if distancia[v] == math.inf: distancia.pop(v)
-
 
 def ordenar_vertices(distancia):
     """Los vertices se ordenan 'solos' al pasarlos a una lista"""
@@ -41,7 +41,6 @@ def centralidad_(grafo):
             if w == v: continue
             cent[w] += cent_aux[w]
     return cent
-
 
 def imprimir_resultado(camino):
     for elem in range(len(camino)-1):
@@ -90,6 +89,29 @@ def armar_grafo(ciudades, vuelos, modo):
         grafo.agregar_arista(separado[0], separado[1], int(vuelos[v][indice]))
         grafo.agregar_arista(separado[1], separado[0], int(vuelos[v][indice]))
     return grafo
+
+def vacaciones_aux(origen, vertice, grafo, recorrido, cantidad):
+    """
+    Auxiliar de vacaciones.
+    Recibe un vertice de origen, un vertice, un grafo, la lista del 
+    recorrido y la cantidad de lugares a visitar.
+    Devuelve True en caso de exito con la lista modificada.
+    Devuelve False en caso de no encontrar ruta.
+    """
+    if len(recorrido) == cantidad:
+        return True
+
+    for ady in grafo.adyacentes(vertice):
+        if ady not in recorrido:
+            if len(recorrido) == cantidad-1:
+                if not origen in grafo.adyacentes(ady):
+                    continue
+            recorrido.append(ady)
+            if vacaciones_aux(origen, ady, grafo, recorrido, cantidad):
+                return True
+    
+    recorrido.pop()
+    return False
 
 def comparacion(x, y):
     if x[1] < y[1]: return 1
