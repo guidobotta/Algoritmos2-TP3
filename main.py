@@ -41,7 +41,7 @@ def camino_mas(comando, ciudades, vuelos):
 
 def camino_escalas(comando, ciudades, vuelos):
     """
-    
+
     """
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
@@ -64,9 +64,17 @@ def camino_escalas(comando, ciudades, vuelos):
     _ULTIMA_RUTA_[0] = mejor_camino
     return
 
-def centralidad(comando):
-    """"""
+def centralidad(comando, ciudades, vuelos):
+    n = int(comando)
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
+    centrales = centralidad_(grafo)
+    for vertice in centrales:
+        if n < 1: break
+        print(vertice, end=", ")
+        n -= 1
+    print(vertice)
     return
+
 
 def centralidad_aprox(comando):
     """"""
