@@ -81,7 +81,11 @@ def nueva_aerolinea(comando):
     return
 
 def recorrer_mundo(comando):
-    """"""
+    """
+    Devuelve una lista en orden de cómo debemos movernos por el mundo 
+    para visitar todas las ciudades del mundo, demorando lo menos posible.
+    """
+    
     return
 
 def recorrer_mundo_aprox(comando):
@@ -97,6 +101,9 @@ def itinerario_cultural(comando):
     return
 
 def exportar_kml(comando, aeropuertos):
+    """
+    Exporta la ruta del último comando ejecutado a un archivo KML.
+    """
     ruta = _ULTIMA_RUTA_[0]
     encabezado = \
     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
