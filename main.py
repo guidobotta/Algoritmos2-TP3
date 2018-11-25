@@ -1,24 +1,41 @@
 #Funciones auxiliares
 from funciones_auxiliares import *
 
+###
+#   CONSTANTES GLOBLALES
+###
+
 _ULTIMA_RUTA_ = [[]]
 
 _LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
 "recorrer_mundo_aprox","vacaciones","itinerario_cultural","exportal_kml"]
 
+###
+#   FUNCIONES
+###
+
 def listar_operaciones():
-    """Imprime una línea por cada comando implementado."""
+    """
+    Imprime una línea por cada comando implementado.
+    """
     for operacion in _LISTA_OPERACIONES_:
         print(operacion)
 
 def camino_mas(comando, ciudades, vuelos):
     """
+    Imprime una lista con los aeropuertos (código) con los cuales vamos
+    de la ciudad origen a la ciudad destino de la forma más rápida o más
+    barata, según corresponda. Tener en cuenta que tanto la ciudad origen
+    como la destino pueden tener más de un aeropuerto, y nos interesa la
+    mejor forma (rápida o barata) entre todas las combinaciones posibles.
+
     Recibe una linea de comandos de la siguiente forma:
-    "modo,ciudad_orignen,ciudad_destino"
+    "modo,ciudad_origen,ciudad_destino"
     El modo puede ser "rapido" o "barato".
-    También recibe dos diccionarios con la informacion de las
-    ciudades y los vuelos.
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
     """
     linea = comando.split(",")
 
@@ -42,7 +59,15 @@ def camino_mas(comando, ciudades, vuelos):
 
 def camino_escalas(comando, ciudades, vuelos):
     """
+    Imprime una lista con los aeropuertos (código) con los cuales vamos
+    de la ciudad origen a la ciudad destino con la menor cantidad de 
+    escalas.
 
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen,ciudad_destino"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
     """
     linea = comando.split(",")
     #Da igual que peso le damos a las aristas
@@ -66,6 +91,16 @@ def camino_escalas(comando, ciudades, vuelos):
     return
 
 def centralidad(comando, ciudades, vuelos):
+    """
+    Muestra los n aeropuertos más centrales/importantes del mundo, de 
+    mayor importancia a menor importancia.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "cantidad_aeropuertos_a_mostrar"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
     n = int(comando)
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     centrales = centralidad_(grafo)
@@ -76,38 +111,89 @@ def centralidad(comando, ciudades, vuelos):
     print(vertice)
     return
 
+def centralidad_aprox(comando, ciudades, vuelos):
+    """
+    Nuestra los n aeropuertos más centrales/importantes del mundo de 
+    forma aproximada, de mayor importancia a menor importancia.
 
-def centralidad_aprox(comando):
-    """"""
+    Recibe una linea de comandos de la siguiente forma:
+    "cantidad_aeropuertos_a_mostrar"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
     return
 
-def pagerank(comando):
-    """"""
+def pagerank(comando, ciudades, vuelos):
+    """
+    Muestra los n aeropuertos más centrales/importantes del mundo según
+    el algoritmo de pagerank, de mayor importancia a menor importancia.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "cantidad_aeropuertos_a_mostrar"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
     return
 
-def nueva_aerolinea(comando):
-    """"""
+def nueva_aerolinea(comando, ciudades, vuelos):
+    """
+    
+    """
     return
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo 
     para visitar todas las ciudades del mundo, demorando lo menos posible.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     
     return
 
-def recorrer_mundo_aprox(comando):
-    """"""
+def recorrer_mundo_aprox(comando, ciudades, vuelos):
+    """
+    Devuelve una lista en orden de cómo debemos movernos por el mundo 
+    para visitar todas las ciudades del mundo, demorando aproximadamente
+    lo menos posible.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
     return
 
-def vacaciones(comando):
-    """"""
+def vacaciones(comando, ciudades, vuelos):
+    """
+    Devuelve algún recorrido que comience en origen y que termine en origen 
+    también, de largo n (sin contar la última vuelta al origen). 
+    No debe pasarse por un aeropuerto más de una vez (salvo el origen, 
+    cuando volvemos a éste). En caso de no encontrar un recorrido de dicho 
+    largo que vuelva luego al origen, imprime "No se encontro recorrido"
+
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen,cantidad_ciudades_a_visitar"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
+    
     return
 
-def itinerario_cultural(comando):
-    """"""
+def itinerario_cultural(comando, ciudades, vuelos):
+    """
+    
+    """
     return
 
 def exportar_kml(comando, aeropuertos):
@@ -161,26 +247,35 @@ def exportar_kml(comando, aeropuertos):
         #linea
         f.write(cerrar_documento + "\n")
 
+###
+#   EJECUTADOR
+###
+
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     Recibe una linea y ejecuta la operación correspondiente.
     En caso de no recibir una operación correcta, levanta un error.
     """
     comando = linea.split(' ', 1)
-    if (comando[0] == 'listar_operaciones'): listar_operaciones()
-    elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'centralidad'): centralidad(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'centralidad_aprox'): centralidad_aprox(ccomando[1], ciudades, vuelos)
-    elif (comando[0] == 'pagerank'): pagerank(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'nueva_aerolinea'): nueva_aerolinea(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'itinerario_cultural'): itinerario_cultural(comando[1], ciudades, vuelos)
-    elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
-    else: print("Error")
+    try:
+        if (comando[0] == 'listar_operaciones'): listar_operaciones()
+        elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'centralidad'): centralidad(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'centralidad_aprox'): centralidad_aprox(ccomando[1], ciudades, vuelos)
+        elif (comando[0] == 'pagerank'): pagerank(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'nueva_aerolinea'): nueva_aerolinea(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'itinerario_cultural'): itinerario_cultural(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
+    except:
+        print("Error en comando {}".format(comando[0]))
 
+###
+#   MAIN
+###
 
 def main():
     """
