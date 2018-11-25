@@ -143,7 +143,6 @@ def exportar_kml(comando, aeropuertos):
             f.write(cerrar_linea + "\n")
         #linea
         f.write(cerrar_documento + "\n")
-        f.close()
 
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
