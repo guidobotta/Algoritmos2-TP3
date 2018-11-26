@@ -214,34 +214,38 @@ def cargar_archivo(archivo):
     """Carga los datos recibidos de itinerario.csv y devuelve una lista de las ciudades a visitar
     junto con un grafo de orden topologico"""
     grafo = Grafo()
-    ciudades = []
     with open(archivo) as a:
         linea = a.readline().rstrip()
         separado = linea.split(",")
         for x in separado:
-            ciudades.append(x)
             grafo.agregar_vertice(x)
         while True:
             linea = a.readline().rstrip()
             if not linea: break
             restriccion = linea.split(",")
             grafo.agregar_arista(restriccion[0], restriccion[1])
-    return grafo, ciudades
+    return grafo
 
 def orden_topologico(grafo):
     """Algoritmo de orden topologico, devuelve una lista con el orden a realizar"""
     orden = {}
     resultado = []
     q = Cola()
-    for v in grafo: orden[v] = 0
+
+    for v in grafo: 
+        orden[v] = 0
+
     for v in grafo:
         for w in grafo.adyacentes(v): orden[w] += 1
+
     for v in grafo:
         if orden[v] == 0: q.encolar(v)
+
     while not q.esta_vacia():
         v = q.desencolar()
         resultado.append(v)
         for w in grafo.adyacentes(v):
             orden[w] -= 1
             if orden[w] == 0: q.encolar(w)
+                
     return resultado

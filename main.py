@@ -197,13 +197,13 @@ def vacaciones(comando, ciudades, vuelos):
 
 def itinerario_cultural(comando, ciudades, vuelos):
     """Calcula el itinerario a partir de dos grafos, uno de ciudades con prioridad y otro de aeropuertos"""
-    grafo, ciudades_a_visitar = cargar_archivo(comando)
+    grafo = cargar_archivo(comando)
     orden = orden_topologico(grafo)
     for v in range(len(orden)-1):
         print(orden[v], end=", ")
-    print(orden[len(orden)-1])
-    for i in range(len(ciudades_a_visitar)-1):
-        camino_mas("rapido,"+ ciudades_a_visitar[i] + "," + ciudades_a_visitar[i+1], ciudades, vuelos)
+    print()
+    for i in range(len(orden)-1):
+        camino_mas("rapido,"+ orden[i] + "," + orden[i+1], ciudades, vuelos)
     return
 
 def exportar_kml(comando, aeropuertos):
