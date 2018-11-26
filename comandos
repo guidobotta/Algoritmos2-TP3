@@ -3,3 +3,4 @@ camino_mas barato,Rochester,Houston
 camino_mas barato,Tallahassee,Houston
 camino_mas rapido,San Diego,New York
 camino_mas barato,San Diego,New York
+itinerario itinerario_ejemplo.csv

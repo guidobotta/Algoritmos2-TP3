@@ -60,7 +60,7 @@ def camino_mas(comando, ciudades, vuelos):
 def camino_escalas(comando, ciudades, vuelos):
     """
     Imprime una lista con los aeropuertos (código) con los cuales vamos
-    de la ciudad origen a la ciudad destino con la menor cantidad de 
+    de la ciudad origen a la ciudad destino con la menor cantidad de
     escalas.
 
     Recibe una linea de comandos de la siguiente forma:
@@ -88,7 +88,7 @@ def camino_escalas(comando, ciudades, vuelos):
 
 def centralidad(comando, ciudades, vuelos):
     """
-    Muestra los n aeropuertos más centrales/importantes del mundo, de 
+    Muestra los n aeropuertos más centrales/importantes del mundo, de
     mayor importancia a menor importancia.
 
     Recibe una linea de comandos de la siguiente forma:
@@ -109,7 +109,7 @@ def centralidad(comando, ciudades, vuelos):
 
 def centralidad_aprox(comando, ciudades, vuelos):
     """
-    Nuestra los n aeropuertos más centrales/importantes del mundo de 
+    Nuestra los n aeropuertos más centrales/importantes del mundo de
     forma aproximada, de mayor importancia a menor importancia.
 
     Recibe una linea de comandos de la siguiente forma:
@@ -136,13 +136,13 @@ def pagerank(comando, ciudades, vuelos):
 
 def nueva_aerolinea(comando, ciudades, vuelos):
     """
-    
+
     """
     return
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
-    Devuelve una lista en orden de cómo debemos movernos por el mundo 
+    Devuelve una lista en orden de cómo debemos movernos por el mundo
     para visitar todas las ciudades del mundo, demorando lo menos posible.
 
     Recibe una linea de comandos de la siguiente forma:
@@ -152,12 +152,12 @@ def recorrer_mundo(comando, ciudades, vuelos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    
+
     return
 
 def recorrer_mundo_aprox(comando, ciudades, vuelos):
     """
-    Devuelve una lista en orden de cómo debemos movernos por el mundo 
+    Devuelve una lista en orden de cómo debemos movernos por el mundo
     para visitar todas las ciudades del mundo, demorando aproximadamente
     lo menos posible.
 
@@ -171,10 +171,10 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos):
 
 def vacaciones(comando, ciudades, vuelos):
     """
-    Devuelve algún recorrido que comience en origen y que termine en origen 
-    también, de largo n (sin contar la última vuelta al origen). 
-    No debe pasarse por un aeropuerto más de una vez (salvo el origen, 
-    cuando volvemos a éste). En caso de no encontrar un recorrido de dicho 
+    Devuelve algún recorrido que comience en origen y que termine en origen
+    también, de largo n (sin contar la última vuelta al origen).
+    No debe pasarse por un aeropuerto más de una vez (salvo el origen,
+    cuando volvemos a éste). En caso de no encontrar un recorrido de dicho
     largo que vuelva luego al origen, imprime "No se encontro recorrido"
 
     Recibe una linea de comandos de la siguiente forma:
@@ -196,9 +196,14 @@ def vacaciones(comando, ciudades, vuelos):
         print("No se encontró recorrido")
 
 def itinerario_cultural(comando, ciudades, vuelos):
-    """
-    
-    """
+    """Calcula el itinerario a partir de dos grafos, uno de ciudades con prioridad y otro de aeropuertos"""
+    grafo, ciudades_a_visitar = cargar_archivo(comando)
+    orden = orden_topologico(grafo)
+    for v in range(len(orden)-1):
+        print(orden[v], end=", ")
+    print(orden[len(orden)-1])
+    for i in range(len(ciudades_a_visitar)-1):
+        camino_mas("rapido,"+ ciudades_a_visitar[i] + "," + ciudades_a_visitar[i+1], ciudades, vuelos)
     return
 
 def exportar_kml(comando, aeropuertos):
@@ -273,7 +278,7 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos)
         elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos)
         elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
-        elif (comando[0] == 'itinerario_cultural'): itinerario_cultural(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
         elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
     except:
         print("Error en comando {}".format(comando[0]))
@@ -309,7 +314,7 @@ def main():
     ciudades, aeropuertos = cargar_ciudades_y_aeropuertos(archivo_1)
     vuelos = cargar_vuelos(archivo_2)
     if not ciudades or not vuelos: raise Exception("Fallo al cargar archivos")
-    
+
     while True:
         linea = entrada.readline()
         if not linea:
