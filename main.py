@@ -154,9 +154,7 @@ def nueva_aerolinea(comando, ciudades, vuelos):
     archivo = comando
     grafo = armar_grafo(ciudades, vuelos, "barato")
     ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
-    for v in ab_min:
-        print(v)
-    #escribir_archivo(archivo, ab_min, vuelos)
+    escribir_archivo(archivo, ab_min, vuelos)
 
 def escribir_archivo(archivo, ab_min, vuelos):
     visitados = set()

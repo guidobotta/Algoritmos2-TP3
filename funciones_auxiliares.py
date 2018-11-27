@@ -251,29 +251,44 @@ def orden_topologico(grafo):
                 
     return resultado
 
+def comparacion_prim(tup_1, tup_2):
+    """
+    Recibe dos tuplas de la forma:
+    (vertice1, vertice2, peso)
+    Compara el peso entre ellos y devuelve:
+    1 si tup_1 < tup_2
+    0 si tup_1 == tup_2
+    -1 si tup_1 > tup_2
+    """
+    peso_1 = tup_1[2]
+    peso_2 = tup_2[2]
+    if peso_1 < peso_2: return 1
+    elif peso_1 == peso_2: return 0
+    else: return -1
+
 def prim(grafo, vertice):
     """
     Recibe un grafo y un vertice aleatorio de dicho grafo.
     Devuelve un arbol de tendido minimo(Grafo).
     """
     visitados = set()
-    q = Heap(comparacion)
+    q = Heap(comparacion_prim)
     arbol = Grafo()
 
     visitados.add(vertice)
     for w in grafo.adyacentes(vertice):
-        q.encolar((vertice, w), grafo.peso_arista(vertice, w))
+        q.encolar((vertice, w, grafo.peso_arista(vertice, w)))
     for v in grafo.obtener_vertices():
         arbol.agregar_vertice(v)
-
     while not q.esta_vacia():
-        (v,w) = q.desencolar()
+        (v,w, peso) = q.desencolar()
         if w in visitados:
             continue
-        arbol.agregar_arista(v, w, grafo.peso_arista(v,w))
+        visitados.add(w)
+        arbol.agregar_arista(v, w, peso)
         for x in grafo.adyacentes(w):
             if x not in visitados:
-                q.encolar((w,x),grafo.peso_arista(w,x))
+                q.encolar((w,x,grafo.peso_arista(w,x)))
     
     return arbol
 
