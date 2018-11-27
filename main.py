@@ -199,17 +199,22 @@ def vacaciones(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
-    comandos = comando.split(',')
-    grafo = armar_grafo(ciudades,vuelos, "rapido")
-    origen = random.choice(ciudades[comandos[0]].ver_aeropuertos())
-    cantidad = int(comandos[1])
-    recorrido = [origen]
+    comandos = comando.split(",")
+    lista_aeropuertos = ciudades[comandos[0]].ver_aeropuertos()
+    for ind_aero in range(len(lista_aeropuertos)):
+        #Pruebo a partir de cada uno de los aeropuertos de la ciudad
+        comandos = comando.split(',')
+        grafo = armar_grafo(ciudades,vuelos, "rapido")
+        origen = lista_aeropuertos[ind_aero]
+        cantidad = int(comandos[1])
+        recorrido = [origen]
 
-    if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
-        recorrido.append(origen)
-        imprimir_resultado(recorrido)
-    else:
-        print("No se encontró recorrido")
+        if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
+            recorrido.append(origen)
+            imprimir_resultado(recorrido)
+            return
+            
+    print("No se encontró recorrido")
 
 def itinerario_cultural(comando, ciudades, vuelos):
     """
@@ -294,6 +299,8 @@ def exportar_kml(comando, aeropuertos):
 #   EJECUTADOR
 ###
 
+from time import time
+
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     Recibe una linea y ejecuta la operación correspondiente.
@@ -301,6 +308,7 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     comando = linea.split(' ', 1)
     try:
+        tiempo = time()
         if (comando[0] == 'listar_operaciones'): listar_operaciones()
         elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
         elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
@@ -313,6 +321,8 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
         elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
         elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
+        else: raise Exception()
+        print(f"Tardo: {time()-tiempo}seg")
     except:
         print("Error en comando {}".format(comando[0]))
 
