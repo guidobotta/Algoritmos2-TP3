@@ -55,7 +55,6 @@ def camino_mas(comando, ciudades, vuelos):
     imprimir_resultado(mejor_camino)
 
     _ULTIMA_RUTA_[0] = mejor_camino
-    return
 
 def camino_escalas(comando, ciudades, vuelos):
     """
@@ -84,7 +83,6 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_distancia = distancia
     imprimir_resultado(mejor_camino)
     _ULTIMA_RUTA_[0] = mejor_camino
-    return
 
 def centralidad(comando, ciudades, vuelos):
     """
@@ -105,7 +103,6 @@ def centralidad(comando, ciudades, vuelos):
         print(vertice, end=", ")
         n -= 1
     print(vertice)
-    return
 
 def centralidad_aprox(comando, ciudades, vuelos):
     """
@@ -132,13 +129,52 @@ def pagerank(comando, ciudades, vuelos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    return
+    cantidad = int(comando)
+    lista_aeropuertos = calc_prank(grafo)
+    for i in range(cantidad-1):
+        print(lista_aeropuertos[i][0], end=",")
+    print(lista_aeropuertos[cantidad-1][0])
 
 def nueva_aerolinea(comando, ciudades, vuelos):
     """
+    Crea un archivo .csv con las rutas que permitan implementar una nueva
+    aerolínea tal que se pueda comunicar a todos los aeropuertos con
+    dicha aerolínea, pero que el costo total de la licitación de las
+    rutas aéreas sea mínima.
+    
+    El formato del archivo creado será de la forma:
+    'aeropuerto_i,aeropuerto_j,tiempo_promedio,precio,cant_vuelos_entre_aeropuertos'.
 
+    Recibe una linea de comandos de la siguiente forma:
+    "ruta_archivo_de_salida.csv"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
     """
-    return
+    archivo = comando
+    grafo = armar_grafo(ciudades, vuelos, "barato")
+    ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
+    for v in ab_min:
+        print(v)
+    #escribir_archivo(archivo, ab_min, vuelos)
+
+def escribir_archivo(archivo, ab_min, vuelos):
+    visitados = set()
+    with open(archivo, 'w') as arch:
+        for v in ab_min:
+            if v in visitados:
+                continue
+            aero_i = v 
+            visitados.add(v)
+            clave = aero_i + "|" + aero_j
+            #precio = vuelos[]
+            for w in ab_min.adyacentes(v):
+                if w in visitados:
+                    continue
+                visitados.add(w)
+                aero_j = w
+                
+            arch.write("{},{},{},{}")
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
@@ -196,7 +232,25 @@ def vacaciones(comando, ciudades, vuelos):
         print("No se encontró recorrido")
 
 def itinerario_cultural(comando, ciudades, vuelos):
-    """Calcula el itinerario a partir de dos grafos, uno de ciudades con prioridad y otro de aeropuertos"""
+    """
+    Recibe una linea de comandos de la siguiente forma:
+    "ruta_archivo.csv"
+    El archivo de ruta tiene el formato:
+    "
+    ciudad_1,ciudad_2,ciudad_3, ...,ciudad_N
+    ciudad_i,ciudad_j
+    ...
+    "
+    La primera línea indica las ciudades que se desean visitar. Las 
+    siguientes indican que la ciudad_i debe visitarse sí o sí antes que 
+    la ciudad_j.
+
+    Imprime el orden en el que deben visitarse dichas ciudades y el camino 
+    mínimo en tiempo a realizar.
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
     grafo = cargar_archivo(comando)
     orden = orden_topologico(grafo)
     for v in range(len(orden)-1):
@@ -204,7 +258,6 @@ def itinerario_cultural(comando, ciudades, vuelos):
     print()
     for i in range(len(orden)-1):
         camino_mas("rapido,"+ orden[i] + "," + orden[i+1], ciudades, vuelos)
-    return
 
 def exportar_kml(comando, aeropuertos):
     """

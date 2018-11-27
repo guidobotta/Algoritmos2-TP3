@@ -5,6 +5,7 @@ from cola import *
 from pila import *
 from ciudad import *
 #Modulos de Python
+from operator import itemgetter
 import sys
 import random
 import math
@@ -179,8 +180,8 @@ def dijkstra(grafo, origen, ciudad_destino):
         v = q.desencolar()[0]
         if v in ciudad_destino: return reconstruir_camino(origen, v, padre, dist)
         for w in grafo.adyacentes(v):
-            if dist[v] + grafo.peso_union(v, w) < dist[w]:
-                dist[w] = dist[v] + grafo.peso_union(v, w)
+            if dist[v] + grafo.peso_arista(v, w) < dist[w]:
+                dist[w] = dist[v] + grafo.peso_arista(v, w)
                 padre[w] = v
                 q.encolar([w, dist[w]])
     #Devolvemos algo acá?
@@ -249,3 +250,52 @@ def orden_topologico(grafo):
             if orden[w] == 0: q.encolar(w)
                 
     return resultado
+
+def prim(grafo, vertice):
+    """
+    Recibe un grafo y un vertice aleatorio de dicho grafo.
+    Devuelve un arbol de tendido minimo(Grafo).
+    """
+    visitados = set()
+    q = Heap(comparacion)
+    arbol = Grafo()
+
+    visitados.add(vertice)
+    for w in grafo.adyacentes(vertice):
+        q.encolar((vertice, w), grafo.peso_arista(vertice, w))
+    for v in grafo.obtener_vertices():
+        arbol.agregar_vertice(v)
+
+    while not q.esta_vacia():
+        (v,w) = q.desencolar()
+        if w in visitados:
+            continue
+        arbol.agregar_arista(v, w, grafo.peso_arista(v,w))
+        for x in grafo.adyacentes(w):
+            if x not in visitados:
+                q.encolar((w,x),grafo.peso_arista(w,x))
+    
+    return arbol
+
+def calc_prank(grafo):
+    """
+    Recibe un grafo de aeropuertos.
+    Devuelve una lista ordenada de los mas importantes.
+    """
+    prank = {}
+    for v in grafo:
+        prank[v] = 0
+    d = 0.85
+    for i in range(20):
+    #PODEMOS CAMBIAR EL FOR POR UNA CONDICION DE CONVERGENCIA
+    #HABRIA QUE HACER UNA FUNCIÓN APARTE
+        for v in grafo:
+            prank_ady = 0
+            for ady in grafo.adyacentes(v):
+                prank_ady += (prank[ady]/len(grafo.adyacentes(ady)))
+            prank[v] = ( ((1-d)/len(prank)) + (d*prank_ady) )
+    lista = []
+    for aero in prank:
+        lista.append((aero, prank[aero]))
+    lista.sort(key=itemgetter(1), reverse=True)
+    return lista
