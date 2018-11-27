@@ -164,15 +164,19 @@ def escribir_archivo(archivo, ab_min, vuelos):
                 continue
             aero_i = v 
             visitados.add(v)
-            clave = aero_i + "|" + aero_j
-            #precio = vuelos[]
             for w in ab_min.adyacentes(v):
                 if w in visitados:
                     continue
                 visitados.add(w)
                 aero_j = w
-                
-            arch.write("{},{},{},{}")
+                clave = aero_i + "|" + aero_j
+                if clave not in vuelos:
+                    clave = aero_j + "|" + aero_i
+                tiempo_promedio = vuelos[clave][0]
+                precio = vuelos[clave][1]
+                cant_vuelos = vuelos[clave][2]
+                arch.write("{},{},{},{},{}".format(aero_i, aero_j,\
+                tiempo_promedio, precio, cant_vuelos))
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
