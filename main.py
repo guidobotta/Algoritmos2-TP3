@@ -156,28 +156,6 @@ def nueva_aerolinea(comando, ciudades, vuelos):
     ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
     escribir_archivo(archivo, ab_min, vuelos)
 
-def escribir_archivo(archivo, ab_min, vuelos):
-    visitados = set()
-    with open(archivo, 'w') as arch:
-        for v in ab_min:
-            if v in visitados:
-                continue
-            aero_i = v 
-            visitados.add(v)
-            for w in ab_min.adyacentes(v):
-                if w in visitados:
-                    continue
-                visitados.add(w)
-                aero_j = w
-                clave = aero_i + "|" + aero_j
-                if clave not in vuelos:
-                    clave = aero_j + "|" + aero_i
-                tiempo_promedio = vuelos[clave][0]
-                precio = vuelos[clave][1]
-                cant_vuelos = vuelos[clave][2]
-                arch.write("{},{},{},{},{}".format(aero_i, aero_j,\
-                tiempo_promedio, precio, cant_vuelos))
-
 def recorrer_mundo(comando, ciudades, vuelos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo
