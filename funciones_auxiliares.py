@@ -8,6 +8,26 @@ from ciudad import *
 from operator import itemgetter
 import sys
 import math
+import random
+
+def vertice_aleatorio(pesos):
+    #Pesos es un diccionario de pesos, clave vértice vecino, valor el peso.
+    total = sum(pesos.values())
+    rand = random.uniform(0, total)
+    acum = 0
+    for vertice, peso_arista in pesos.items():
+        if acum + peso_arista >= rand:
+            return vertice
+        acum += peso_arista
+
+def random_walks(grafo, origen, apariciones, k):
+    #Contador de apariciones de un vertice
+    for a in range(k):
+        pesos = {}
+        for w in grafo.adyacentes(origen):
+            pesos[w] = grafo.peso_arista(origen,w)
+        origen = vertice_aleatorio(pesos)
+        apariciones[origen] += 1
 
 
 def filtrar_infinitos(distancia):

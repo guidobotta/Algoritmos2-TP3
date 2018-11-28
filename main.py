@@ -121,6 +121,30 @@ def centralidad_aprox(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
+    grafo = armar_grafo(ciudades, vuelos, "cent_aprox")
+    origen = grafo.obtener_vertice_aleatorio()
+    k=20
+    apariciones = {}
+    lista = []
+    resultado = []
+    n = int(comando)
+    for v in grafo:
+        apariciones[v] = 0
+    random_walks(grafo, origen, apariciones, k)
+    for x in apariciones:
+        lista.append([x, apariciones[x]])
+    lista.sort(reverse=True, key=segundo_item)
+    for i in lista:
+        if n < 1: break
+        resultado.append(i[0])
+        n -= 1
+
+    imprimir_resultado(resultado, ", ")
+    #Crear un grafo con cantidad de vuelos como peso
+    #Elegir un vertice vertice aleatorio
+    #Llamar a Random_Walks para ese vertice
+    #Realizar este ciclo K veces
+    #Devolver la lista generada
     return
 
 def pagerank(comando, ciudades, vuelos):
@@ -161,6 +185,7 @@ def nueva_aerolinea(comando, ciudades, vuelos):
     grafo = armar_grafo(ciudades, vuelos, "barato")
     ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
     escribir_archivo(archivo, ab_min, vuelos)
+    print("OK")
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
@@ -317,7 +342,7 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
         elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
         elif (comando[0] == 'centralidad'): centralidad(comando[1], ciudades, vuelos)
-        elif (comando[0] == 'centralidad_aprox'): centralidad_aprox(ccomando[1], ciudades, vuelos)
+        elif (comando[0] == 'centralidad_aprox'): centralidad_aprox(comando[1], ciudades, vuelos)
         elif (comando[0] == 'pagerank'): pagerank(comando[1], ciudades, vuelos)
         elif (comando[0] == 'nueva_aerolinea'): nueva_aerolinea(comando[1], ciudades, vuelos)
         elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos)
