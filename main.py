@@ -215,18 +215,19 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    ciudad_origen = ciudades[comando]
+    ciudad_origen = comando
     visitados = {}
     resultado = []
-    for v in ciudad_origen:
-        visitados[aeropuertos[v][0]] = True
-        resultado.append(v)
-        camino, distancia = recorrer_recursivo(grafo, v, aeropuertos, visitados, resultado)
-        if distancia < mejor_distancia:
-            mejor_camino = camino
-            mejor_distancia = distancia
-    imprimir_resultado(mejor_camino, " -> ")
-    print(reconstruir_distancia(grafo, mejor_camino))
+    padres = {}
+    x = ciudades[ciudad_origen].ver_aeropuertos()
+    v = x[0]
+    print(v)
+    visitados[aeropuertos[v][0]] = True
+    padres[v] = None
+    resultado.append(v)
+    recorrer_recursivo(grafo, v, aeropuertos, visitados, resultado, padres)
+    imprimir_resultado(resultado, " -> ")
+    print(reconstruir_distancia(grafo, resultado))
     return
 
 def vacaciones(comando, ciudades, vuelos):

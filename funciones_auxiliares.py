@@ -11,10 +11,7 @@ import math
 import random
 
 
-def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado):
-    """Se mueve por el grafo por las aristas de menor peso posible (no visitadas)
-    En caso de que esten todas visitadas se moverá a la de menor peso"""
-    #Crea un bucle, solucionar con un detector de bucles o aplicar a un arbol de tendido minimo
+def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres):
     v = origen
     adyacentes = []
     for w in grafo.adyacentes(v):
@@ -23,17 +20,14 @@ def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado):
     for i in adyacentes:
         if aeropuertos[i[0]][0] not in visitados:
             resultado.append(i[0])
+            padres[i[0]] = v
             visitados[aeropuertos[i[0]][0]] = True
-            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado)
+            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres)
             return
     if len(visitados) < len(grafo):
-        resultado.append(adyacentes[0][0])
-        recorrer_recursivo(grafo, adyacentes[0][0], aeropuertos, visitados, resultado)
-
-    #Iniciar desde el origen
-    #Entre los adyacentes a mi actual moverme al de menor peso que no este visitado
-    #Si estan todos visitados y len(visitados) < len(grafo) me muevo al de menor peso
-    #Voy armando una lista con cada movimiento
+        if not padres[v]: return
+        resultado.append(padres[v])
+        recorrer_recursivo(grafo, padres[v], aeropuertos, visitados, resultado, padres)
     return
 
 def reconstruir_distancia(grafo, camino):
