@@ -98,10 +98,10 @@ def centralidad(comando, ciudades, vuelos):
     grafo = armar_grafo(ciudades, vuelos, "vuelos")
     lista = []
     resultado = []
-    centrales = centralidad_(grafo)
+    centrales = centralidad_aux(grafo)
     for a in centrales:
         lista.append([a, centrales[a]])
-    lista.sort(reverse=True, key=segundo_item)
+    lista.sort(reverse=True, key=itemgetter(1))
     for i in lista:
         if n < 1: break
         resultado.append(i[0])
@@ -133,7 +133,7 @@ def centralidad_aprox(comando, ciudades, vuelos):
     random_walks(grafo, origen, apariciones, k)
     for x in apariciones:
         lista.append([x, apariciones[x]])
-    lista.sort(reverse=True, key=segundo_item)
+    lista.sort(reverse=True, key=itemgetter(1))
     for i in lista:
         if n < 1: break
         resultado.append(i[0])
@@ -161,8 +161,15 @@ def pagerank(comando, ciudades, vuelos):
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     cantidad = int(comando)
     lista_aeropuertos = calc_prank(grafo)
+
+    if cantidad > len(lista_aeropuertos):
+        cantidad = len(lista_aeropuertos)
+
     for i in range(cantidad-1):
-        print(lista_aeropuertos[i][0], end=",")
+        print(lista_aeropuertos[i][0], end=", ")
+    #Se puede cambiar por imprimir_resultado pero hay que modificar
+    #el cómo crear la lista
+    
     print(lista_aeropuertos[cantidad-1][0])
 
 def nueva_aerolinea(comando, ciudades, vuelos):
@@ -184,6 +191,7 @@ def nueva_aerolinea(comando, ciudades, vuelos):
     archivo = comando
     grafo = armar_grafo(ciudades, vuelos, "barato")
     ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
+
     escribir_archivo(archivo, ab_min, vuelos)
     print("OK")
 
