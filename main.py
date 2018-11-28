@@ -44,7 +44,6 @@ def camino_mas(comando, ciudades, vuelos):
 
     ciudad_origen = ciudades[linea[1]].ver_aeropuertos()
     ciudad_destino = ciudades[linea[2]].ver_aeropuertos()
-
     mejor_distancia = math.inf
     for v in ciudad_origen:
         camino, distancia = dijkstra(grafo, v, ciudad_destino)
@@ -52,7 +51,7 @@ def camino_mas(comando, ciudades, vuelos):
             mejor_camino = camino
             mejor_distancia = distancia
 
-    imprimir_resultado(mejor_camino)
+    imprimir_resultado(mejor_camino, " -> ")
 
     _ULTIMA_RUTA_[0] = mejor_camino
     return
@@ -82,7 +81,7 @@ def camino_escalas(comando, ciudades, vuelos):
         if distancia < mejor_distancia:
             mejor_camino = camino
             mejor_distancia = distancia
-    imprimir_resultado(mejor_camino)
+    imprimir_resultado(mejor_camino, " -> ")
     _ULTIMA_RUTA_[0] = mejor_camino
     return
 
@@ -98,13 +97,19 @@ def centralidad(comando, ciudades, vuelos):
     los vuelos.
     """
     n = int(comando)
-    grafo = armar_grafo(ciudades, vuelos, "rapido")
+    grafo = armar_grafo(ciudades, vuelos, "vuelos")
+    lista = []
+    resultado = []
     centrales = centralidad_(grafo)
-    for vertice in centrales:
+    for a in centrales:
+        lista.append([a, centrales[a]])
+    lista.sort(reverse=True, key=segundo_item)
+    for i in lista:
         if n < 1: break
-        print(vertice, end=", ")
+        resultado.append(i[0])
         n -= 1
-    print(vertice)
+
+    imprimir_resultado(resultado, ", ")
     return
 
 def centralidad_aprox(comando, ciudades, vuelos):
@@ -191,7 +196,7 @@ def vacaciones(comando, ciudades, vuelos):
 
     if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
         recorrido.append(origen)
-        imprimir_resultado(recorrido)
+        imprimir_resultado(recorrido, " -> ")
     else:
         print("No se encontró recorrido")
 
@@ -199,9 +204,7 @@ def itinerario_cultural(comando, ciudades, vuelos):
     """Calcula el itinerario a partir de dos grafos, uno de ciudades con prioridad y otro de aeropuertos"""
     grafo, ciudades_a_visitar = cargar_archivo(comando)
     orden = orden_topologico(grafo)
-    for v in range(len(orden)-1):
-        print(orden[v], end=", ")
-    print(orden[len(orden)-1])
+    imprimir_resultado(orden, ", ")
     for i in range(len(ciudades_a_visitar)-1):
         camino_mas("rapido,"+ ciudades_a_visitar[i] + "," + ciudades_a_visitar[i+1], ciudades, vuelos)
     return
