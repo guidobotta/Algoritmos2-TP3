@@ -54,7 +54,6 @@ def camino_mas(comando, ciudades, vuelos):
     imprimir_resultado(mejor_camino, " -> ")
 
     _ULTIMA_RUTA_[0] = mejor_camino
-    return
 
 def camino_escalas(comando, ciudades, vuelos):
     """
@@ -83,7 +82,6 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_distancia = distancia
     imprimir_resultado(mejor_camino, " -> ")
     _ULTIMA_RUTA_[0] = mejor_camino
-    return
 
 def centralidad(comando, ciudades, vuelos):
     """
@@ -137,13 +135,32 @@ def pagerank(comando, ciudades, vuelos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    return
+    cantidad = int(comando)
+    lista_aeropuertos = calc_prank(grafo)
+    for i in range(cantidad-1):
+        print(lista_aeropuertos[i][0], end=",")
+    print(lista_aeropuertos[cantidad-1][0])
 
 def nueva_aerolinea(comando, ciudades, vuelos):
     """
+    Crea un archivo .csv con las rutas que permitan implementar una nueva
+    aerolínea tal que se pueda comunicar a todos los aeropuertos con
+    dicha aerolínea, pero que el costo total de la licitación de las
+    rutas aéreas sea mínima.
 
+    El formato del archivo creado será de la forma:
+    'aeropuerto_i,aeropuerto_j,tiempo_promedio,precio,cant_vuelos_entre_aeropuertos'.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "ruta_archivo_de_salida.csv"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
     """
-    return
+    archivo = comando
+    grafo = armar_grafo(ciudades, vuelos, "barato")
+    ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
+    escribir_archivo(archivo, ab_min, vuelos)
 
 def recorrer_mundo(comando, ciudades, vuelos):
     """
@@ -188,26 +205,48 @@ def vacaciones(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
-    comandos = comando.split(',')
-    grafo = armar_grafo(ciudades,vuelos, "rapido")
-    origen = random.choice(ciudades[comandos[0]].ver_aeropuertos())
-    cantidad = int(comandos[1])
-    recorrido = [origen]
+    comandos = comando.split(",")
+    lista_aeropuertos = ciudades[comandos[0]].ver_aeropuertos()
+    for ind_aero in range(len(lista_aeropuertos)):
+        #Pruebo a partir de cada uno de los aeropuertos de la ciudad
+        comandos = comando.split(',')
+        grafo = armar_grafo(ciudades,vuelos, "rapido")
+        origen = lista_aeropuertos[ind_aero]
+        cantidad = int(comandos[1])
+        recorrido = [origen]
 
-    if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
-        recorrido.append(origen)
-        imprimir_resultado(recorrido, " -> ")
-    else:
-        print("No se encontró recorrido")
+        if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
+            recorrido.append(origen)
+            imprimir_resultado(recorrido, " -> ")
+            return
+
+    print("No se encontró recorrido")
 
 def itinerario_cultural(comando, ciudades, vuelos):
-    """Calcula el itinerario a partir de dos grafos, uno de ciudades con prioridad y otro de aeropuertos"""
-    grafo, ciudades_a_visitar = cargar_archivo(comando)
+    """
+    Recibe una linea de comandos de la siguiente forma:
+    "ruta_archivo.csv"
+    El archivo de ruta tiene el formato:
+    "
+    ciudad_1,ciudad_2,ciudad_3, ...,ciudad_N
+    ciudad_i,ciudad_j
+    ...
+    "
+    La primera línea indica las ciudades que se desean visitar. Las
+    siguientes indican que la ciudad_i debe visitarse sí o sí antes que
+    la ciudad_j.
+
+    Imprime el orden en el que deben visitarse dichas ciudades y el camino
+    mínimo en tiempo a realizar.
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
+    grafo = cargar_archivo(comando)
     orden = orden_topologico(grafo)
     imprimir_resultado(orden, ", ")
-    for i in range(len(ciudades_a_visitar)-1):
-        camino_mas("rapido,"+ ciudades_a_visitar[i] + "," + ciudades_a_visitar[i+1], ciudades, vuelos)
-    return
+    for i in range(len(orden)-1):
+        camino_mas("rapido,"+ orden[i] + "," + orden[i+1], ciudades, vuelos)
 
 def exportar_kml(comando, aeropuertos):
     """
@@ -264,6 +303,8 @@ def exportar_kml(comando, aeropuertos):
 #   EJECUTADOR
 ###
 
+from time import time
+
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     Recibe una linea y ejecuta la operación correspondiente.
@@ -271,6 +312,7 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     comando = linea.split(' ', 1)
     try:
+        tiempo = time()
         if (comando[0] == 'listar_operaciones'): listar_operaciones()
         elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
         elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
@@ -283,6 +325,8 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
         elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
         elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
+        else: raise Exception()
+        print(f"Tardo: {time()-tiempo}seg")
     except:
         print("Error en comando {}".format(comando[0]))
 

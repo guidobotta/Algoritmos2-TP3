@@ -1,3 +1,5 @@
+from random import choice
+
 class Grafo:
     """
     Clase Grafo implementada sobre lista de adyacencia
@@ -32,7 +34,7 @@ class Grafo:
         else:
             raise Exception()
 
-    def peso_union(self, vertice_1, vertice_2):
+    def peso_arista(self, vertice_1, vertice_2):
         """
         Recibe dos vertices y devuelve el peso de la arista del vertice 1
         al vertice 2.
@@ -79,6 +81,12 @@ class Grafo:
         Devuelve una lista con todos los vertices del grafo.
         """
         return list(self.vertices)
+
+    def obtener_vertice_aleatorio(self):
+        """
+        Devuelve un vertice cualquier del grafo.
+        """
+        return choice(self.obtener_vertices())
 
     def __len__(self):
         """
