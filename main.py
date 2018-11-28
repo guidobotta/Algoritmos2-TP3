@@ -202,7 +202,7 @@ def recorrer_mundo(comando, ciudades, vuelos):
 
     return
 
-def recorrer_mundo_aprox(comando, ciudades, vuelos):
+def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo
     para visitar todas las ciudades del mundo, demorando aproximadamente
@@ -214,6 +214,19 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
+    ciudad_origen = ciudades[comando]
+    visitados = {}
+    resultado = []
+    for v in ciudad_origen:
+        visitados[aeropuertos[v][0]] = True
+        resultado.append(v)
+        camino, distancia = recorrer_recursivo(grafo, v, aeropuertos, visitados, resultado)
+        if distancia < mejor_distancia:
+            mejor_camino = camino
+            mejor_distancia = distancia
+    imprimir_resultado(mejor_camino, " -> ")
+    print(reconstruir_distancia(grafo, mejor_camino))
     return
 
 def vacaciones(comando, ciudades, vuelos):
@@ -311,7 +324,7 @@ def exportar_kml(comando, aeropuertos):
             f.write(abrir_punto1 + "\n")
             f.write("\t\t\t" + aeropuerto + "\n")
             f.write(abrir_punto2 + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+            f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][1]) + ", " + str(aeropuertos[aeropuerto][2]) + "\n")
             f.write(cerrar_punto + "\n")
         anterior = None
         for aeropuerto in ruta:
@@ -319,7 +332,7 @@ def exportar_kml(comando, aeropuertos):
                 anterior = aeropuerto
                 continue
             f.write(abrir_linea + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[anterior][0]) + ", " + str(aeropuertos[anterior][1]) + " " + str(aeropuertos[aeropuerto][0]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
+            f.write("\t\t\t\t" + str(aeropuertos[anterior][1]) + ", " + str(aeropuertos[anterior][2]) + " " + str(aeropuertos[aeropuerto][1]) + ", " + str(aeropuertos[aeropuerto][2]) + "\n")
             f.write(cerrar_linea + "\n")
         #linea
         f.write(cerrar_documento + "\n")

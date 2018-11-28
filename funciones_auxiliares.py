@@ -10,6 +10,39 @@ import sys
 import math
 import random
 
+
+def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado):
+    """Se mueve por el grafo por las aristas de menor peso posible (no visitadas)
+    En caso de que esten todas visitadas se moverá a la de menor peso"""
+    #Crea un bucle, solucionar con un detector de bucles o aplicar a un arbol de tendido minimo
+    v = origen
+    adyacentes = []
+    for w in grafo.adyacentes(v):
+        adyacentes.append([w, grafo.peso_arista(v, w)])
+    adyacentes.sort(key=segundo_item)
+    for i in adyacentes:
+        if aeropuertos[i[0]][0] not in visitados:
+            resultado.append(i[0])
+            visitados[aeropuertos[i[0]][0]] = True
+            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado)
+            return
+    if len(visitados) < len(grafo):
+        resultado.append(adyacentes[0][0])
+        recorrer_recursivo(grafo, adyacentes[0][0], aeropuertos, visitados, resultado)
+
+    #Iniciar desde el origen
+    #Entre los adyacentes a mi actual moverme al de menor peso que no este visitado
+    #Si estan todos visitados y len(visitados) < len(grafo) me muevo al de menor peso
+    #Voy armando una lista con cada movimiento
+    return
+
+def reconstruir_distancia(grafo, camino):
+    """A partir de una lista que representa un camino de vertices reconstruye la distancia recorrida"""
+    distancia = 0
+    for i in range(len(camino)-1):
+        distancia += grafo.peso_arista(camino[i], camino[i+1])
+    return distancia
+
 def vertice_aleatorio(pesos):
     #Pesos es un diccionario de pesos, clave vértice vecino, valor el peso.
     total = sum(pesos.values())
@@ -77,7 +110,7 @@ def cargar_ciudades_y_aeropuertos(archivo_1):
         if not separado[0] in ciudades:
             ciudades[separado[0]] = Ciudad()
         ciudades[separado[0]].agregar_aeropuerto(separado[1], separado[2], separado[3])
-        aeropuertos[separado[1]] = [separado[2], separado[3]]
+        aeropuertos[separado[1]] = [separado[0], separado[2], separado[3]]
     archivo.close()
     return ciudades, aeropuertos
 
