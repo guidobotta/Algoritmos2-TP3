@@ -14,6 +14,40 @@ import random
 #   MAIN FUNCTIONS
 ###
 
+def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
+    v = origen
+    adyacentes = []
+    resultado.append(v)
+    for w in grafo.adyacentes(v):
+        adyacentes.append([w, grafo.peso_arista(v, w)])
+    adyacentes.sort(key=segundo_item)
+    for i in adyacentes:
+        if aeropuertos[i[0]][0] not in visitados:
+            padres[i[0]] = v
+            visitados[aeropuertos[i[0]][0]] = True
+            a_visitados[i[0]] = True
+            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+            if len(visitados) < len(ciudades): resultado.append(v)
+
+    if len(visitados) < len(ciudades):
+        for w in adyacentes:
+            aeropuerto = w[0]
+            if aeropuerto in a_visitados: continue
+            #resultado.append(aeropuerto)
+            padres[aeropuerto] = v
+            a_visitados[aeropuerto] = True
+            recorrer_recursivo(grafo, aeropuerto, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+            if len(visitados) < len(ciudades): resultado.append(v)
+
+    return
+
+def reconstruir_distancia(grafo, camino):
+    distancia = 0
+    for i in range(len(camino)-1):
+        #print(i)
+        distancia += grafo.peso_arista(camino[i], camino[i+1])
+    return distancia
+
 
 def rec_recursivo(grafo, v, origen, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades):
     numero = 0

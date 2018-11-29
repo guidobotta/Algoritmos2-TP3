@@ -254,18 +254,50 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     ciudad_origen = comando
     visitados = {}
+    a_visitados = {}
     resultado = []
     padres = {}
-    x = ciudades[ciudad_origen].ver_aeropuertos()
-    v = x[0]
-    print(v)
-    visitados[aeropuertos[v][0]] = True
-    padres[v] = None
-    resultado.append(v)
-    recorrer_recursivo(grafo, v, aeropuertos, visitados, resultado, padres)
-    imprimir_resultado(resultado, " -> ")
-    print(reconstruir_distancia(grafo, resultado))
-    return
+    aeropuertos_ciudad = ciudades[ciudad_origen].ver_aeropuertos()
+    distancia_inicial = math.inf
+
+    for v in aeropuertos_ciudad:
+        for w in grafo.adyacentes(v):
+            if grafo.peso_arista(v, w) < distancia_inicial:
+                distancia_inicial = grafo.peso_arista(v, w)
+                aeropuerto_origen = v
+
+    visitados[aeropuertos[aeropuerto_origen][0]] = True
+    padres[aeropuerto_origen] = None
+    arbol = prim(grafo, aeropuerto_origen)
+    recorrer_recursivo(arbol, aeropuerto_origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+
+    #imprimir_resultado(resultado, " -> ")
+    """
+    for i in range(len(resultado)-1):
+        try:
+             grafo.peso_arista(resultado[i], resultado[i+1])
+        except:
+            print("Hubo problemas conectando estos aeropuertos: ")
+            print(resultado[i] + ", " + resultado[i+1])
+            problemas.append(resultado[i-2])
+            problemas.append(resultado[i-1])
+            problemas.append(resultado[i])
+            problemas.append(resultado[i+1])
+            break
+    for v in problemas:
+        print(v, end=": ")
+        for w in grafo.adyacentes(v):
+            print(w, end=", ")
+        print("\n")
+    chequeo = []
+    for x in resultado:
+        chequeo.append(aeropuertos[x][0])
+    for a in ciudades:
+        if a not in chequeo: print(a)
+    """
+    distancia = reconstruir_distancia(arbol, resultado)
+    #print(distancia)
+    return resultado, distancia
 
 def vacaciones(comando, ciudades, vuelos):
     """
