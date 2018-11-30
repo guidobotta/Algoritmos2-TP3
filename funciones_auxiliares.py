@@ -14,97 +14,6 @@ import random
 #   MAIN FUNCTIONS
 ###
 
-def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
-    v = origen
-    adyacentes = []
-    resultado.append(v)
-    for w in grafo.adyacentes(v):
-        adyacentes.append([w, grafo.peso_arista(v, w)])
-    adyacentes.sort(key=segundo_item)
-    for i in adyacentes:
-        if aeropuertos[i[0]][0] not in visitados:
-            padres[i[0]] = v
-            visitados[aeropuertos[i[0]][0]] = True
-            a_visitados[i[0]] = True
-            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-            if len(visitados) < len(ciudades): resultado.append(v)
-
-    if len(visitados) < len(ciudades):
-        for w in adyacentes:
-            aeropuerto = w[0]
-            if aeropuerto in a_visitados: continue
-            #resultado.append(aeropuerto)
-            padres[aeropuerto] = v
-            a_visitados[aeropuerto] = True
-            recorrer_recursivo(grafo, aeropuerto, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-            if len(visitados) < len(ciudades): resultado.append(v)
-
-    return
-
-def reconstruir_distancia(grafo, camino):
-    distancia = 0
-    for i in range(len(camino)-1):
-        #print(i)
-        distancia += grafo.peso_arista(camino[i], camino[i+1])
-    return distancia
-
-
-def rec_recursivo(grafo, v, origen, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades):
-    numero = 0
-    a_apariciones[v] = numero
-    a_apariciones[v] = numero + 1
-    ciudad = aeropuertos[v][0]
-    visitados[ciudad] = True
-    resultado.append(v)
-    if len(visitados) == len(ciudades): return
-    if a_apariciones[v] > 30: return
-    print(d_actual[0])
-    if d_actual[0] < d_referencia:
-        for w in grafo.adyacentes(v):
-            d_actual[0] += grafo.peso_arista(v, w)
-            rec_recursivo(grafo, w, v, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades)
-    else:
-        resultado.pop()
-        a_apariciones[v] = numero
-        a_apariciones[v] = numero - 1
-        eliminar = True
-        for x in ciudades[ciudad]:
-            if x[0] in a_apariciones:
-                if a_apariciones[x[0]] != 0: eliminar = False
-        if eliminar:
-            visitados.pop(ciudad)
-        if not origen: return
-        d_actual[0] -= grafo.peso_arista(origen, v)
-    return
-
-def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
-    v = origen
-    adyacentes = []
-    resultado.append(v)
-    for w in grafo.adyacentes(v):
-        adyacentes.append([w, grafo.peso_arista(v, w)])
-    adyacentes.sort(key=segundo_item)
-    for i in adyacentes:
-        if aeropuertos[i[0]][0] not in visitados:
-            padres[i[0]] = v
-            visitados[aeropuertos[i[0]][0]] = True
-            a_visitados[i[0]] = True
-            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-            if len(visitados) < len(ciudades): resultado.append(v)
-
-    if len(visitados) < len(ciudades):
-        for w in adyacentes:
-            aeropuerto = w[0]
-            if aeropuerto in a_visitados: continue
-            #resultado.append(aeropuerto)
-            padres[aeropuerto] = v
-            a_visitados[aeropuerto] = True
-            recorrer_recursivo(grafo, aeropuerto, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-            if len(visitados) < len(ciudades): resultado.append(v)
-
-    return
-
-
 def cargar_ciudades_y_aeropuertos(archivo_1):
     """
     Recibe un archivo csv con vuelos con el formato:
@@ -160,8 +69,8 @@ def armar_grafo(ciudades, vuelos, modo="rapido"):
     for v in vuelos:
         separado = v.split("|")
         if modo == "cantidad":
-            grafo.agregar_arista(separado[0], separado[1], float(1/float(vuelos[v][2])))
-            grafo.agregar_arista(separado[1], separado[0], float(1/float(vuelos[v][2])))
+            grafo.agregar_arista(separado[0], separado[1], (1/float(vuelos[v][2])))
+            grafo.agregar_arista(separado[1], separado[0], (1/float(vuelos[v][2])))
         else:
             grafo.agregar_arista(separado[0], separado[1], int(vuelos[v][indice]))
             grafo.agregar_arista(separado[1], separado[0], int(vuelos[v][indice]))
@@ -269,22 +178,23 @@ def filtrar_infinitos(distancia):
 def centralidad_aux(grafo):
     cent = {}
     for v in grafo: cent[v] = 0
+
     for v in grafo:
-        # hacia todos los demas vertices
         distancia, padre = dijkstra(grafo, v)
         cent_aux = {}
+        
         for w in grafo: cent_aux[w] = 0
         lista = []
         filtrar_infinitos(distancia)
+
         for x in distancia:
             lista.append([x, distancia[x]])
         lista.sort(reverse=True, key=itemgetter(1))
-        #print(lista)
+
         for w in lista:
             if w[0] == v: continue
             cent_aux[padre[w[0]]] += (1 + cent_aux[w[0]])
-        # le sumamos 1 a la centralidad de todos los vertices que se encuentren en
-        # el medio del camino
+
         for w in grafo:
             if w == v: continue
             cent[w] += cent_aux[w]
@@ -318,7 +228,7 @@ def vertice_aleatorio(pesos):
 #   Pagerank
 ###
 
-def calc_prank(grafo):
+def calc_prank(grafo, k, cantidad):
     """
     Recibe un grafo de aeropuertos.
     Devuelve una lista ordenada de los mas importantes.
@@ -327,9 +237,7 @@ def calc_prank(grafo):
     for v in grafo:
         prank[v] = 0
     d = 0.85
-    for i in range(20):
-    #PODEMOS CAMBIAR EL FOR POR UNA CONDICION DE CONVERGENCIA
-    #HABRIA QUE HACER UNA FUNCIÓN APARTE
+    for i in range(k):
         for v in grafo:
             prank_ady = 0
             for ady in grafo.adyacentes(v):
@@ -339,7 +247,7 @@ def calc_prank(grafo):
     for aero in prank:
         lista.append((aero, prank[aero]))
     lista.sort(key=itemgetter(1), reverse=True)
-    return lista
+    return lista[:cantidad]
 
 ###
 #   Nueva Aerolinea
@@ -360,7 +268,7 @@ def comparacion_prim(tup_1, tup_2):
     elif peso_1 == peso_2: return 0
     else: return -1
 
-def prim(grafo, vertice):
+def prim(grafo, vertice, no_dir):
     """
     Recibe un grafo y un vertice aleatorio de dicho grafo.
     Devuelve un arbol de tendido minimo(Grafo).
@@ -380,6 +288,7 @@ def prim(grafo, vertice):
             continue
         visitados.add(w)
         arbol.agregar_arista(v, w, peso)
+        if no_dir: arbol.agregar_arista(w, v, peso)
         for x in grafo.adyacentes(w):
             if x not in visitados:
                 q.encolar((w,x,grafo.peso_arista(w,x)))
@@ -417,35 +326,122 @@ def escribir_archivo(archivo, ab_min, vuelos):
 #   Recorrer Mundo
 ###
 
+def todos_visitados(visitados):
+    for city in visitados:
+        if visitados[city] == 0:
+            return False
+    return True
+
+def sin_visitar(visitados):
+    n = 0
+    for city in visitados:
+        if visitados[city] == 0:
+            n+=1
+    return n
+
+def obtener_minimo(grafo):
+    aristas = grafo.aristas()
+    peso = math.inf
+    for arista in aristas:
+        for vertice in arista:
+            if arista[vertice] < peso:
+                peso = arista[vertice]
+    return peso
+
+def rec_recursivo(grafo, vertice, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion, peso_minimo):
+    if todos_visitados(visitados):
+        if dist_actual[0] > dist_referencia[0]:
+            return False
+        else:
+            dist_referencia[0] = dist_actual[0]
+            solucion[0] = recorrido[:]
+            print(dist_actual)
+
+    if (dist_actual[0] + peso_minimo*sin_visitar(visitados)) > dist_referencia[0]:
+        return False
+
+    for ady in grafo.adyacentes(vertice):
+        if (len(recorrido) > 4) and ((ady == recorrido[-2]) and (vertice == recorrido[-3])):
+            continue
+        recorrido.append(ady)
+        visitados[aeropuertos[ady][0]] += 1
+        dist_actual[0] += grafo.peso_arista(vertice, ady)
+        n[0] += 1
+        if not rec_recursivo(grafo, ady, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion, peso_minimo):
+            recorrido.pop()
+            visitados[aeropuertos[ady][0]] -= 1
+            dist_actual[0] -= grafo.peso_arista(vertice, ady)
+
 ###
 #   Recorrer Mundo Aproximado
 ###
 
-def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres):
+def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
+    """
+
+    """
     v = origen
     adyacentes = []
+    resultado.append(v)
+    #print(visitados)
     for w in grafo.adyacentes(v):
         adyacentes.append([w, grafo.peso_arista(v, w)])
     adyacentes.sort(key=itemgetter(1))
     for i in adyacentes:
         if aeropuertos[i[0]][0] not in visitados:
-            resultado.append(i[0])
             padres[i[0]] = v
             visitados[aeropuertos[i[0]][0]] = True
-            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres)
-            return
-    if len(visitados) < len(grafo):
-        if not padres[v]: return
-        resultado.append(padres[v])
-        recorrer_recursivo(grafo, padres[v], aeropuertos, visitados, resultado, padres)
+            a_visitados[i[0]] = True
+            recorrer_recursivo(grafo, i[0], aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+            if len(visitados) < len(ciudades): resultado.append(v)
+
+    if len(visitados) < len(ciudades):
+        for w in adyacentes:
+            aeropuerto = w[0]
+            if aeropuerto in a_visitados: continue
+            #resultado.append(aeropuerto)
+            padres[aeropuerto] = v
+            a_visitados[aeropuerto] = True
+            recorrer_recursivo(grafo, aeropuerto, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+            if len(visitados) < len(ciudades): resultado.append(v)
+
     return
 
 def reconstruir_distancia(grafo, camino):
-    """A partir de una lista que representa un camino de vertices reconstruye la distancia recorrida"""
+    """
+    A partir de una lista que representa un camino de vertices reconstruye 
+    la distancia recorrida.
+    """
     distancia = 0
     for i in range(len(camino)-1):
         distancia += grafo.peso_arista(camino[i], camino[i+1])
     return distancia
+
+def recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos):
+    """
+
+    """
+    grafo = armar_grafo(ciudades, vuelos, "rapido")
+    ciudad_origen = comando
+    visitados = {}
+    a_visitados = {}
+    resultado = []
+    padres = {}
+    aeropuertos_ciudad = ciudades[ciudad_origen].ver_aeropuertos()
+    distancia_inicial = math.inf
+
+    for v in aeropuertos_ciudad:
+        for w in grafo.adyacentes(v):
+            if grafo.peso_arista(v, w) < distancia_inicial:
+                distancia_inicial = grafo.peso_arista(v, w)
+                aeropuerto_origen = v
+
+    visitados[aeropuertos[aeropuerto_origen][0]] = True
+    padres[aeropuerto_origen] = None
+    arbol = prim(grafo, aeropuerto_origen, True)
+    recorrer_recursivo(arbol, aeropuerto_origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
+    distancia = reconstruir_distancia(arbol, resultado)
+    return resultado, distancia
 
 ###
 #   Vacaciones
@@ -461,7 +457,7 @@ def vacaciones_aux(origen, vertice, grafo, recorrido, cantidad):
     """
     if len(recorrido) == cantidad:
         return True
-     for ady in grafo.adyacentes(vertice):
+    for ady in grafo.adyacentes(vertice):
         if ady not in recorrido:
             if len(recorrido) == cantidad-1:
                 if not origen in grafo.adyacentes(ady):

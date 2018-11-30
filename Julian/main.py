@@ -82,6 +82,7 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_camino = camino
             mejor_distancia = distancia
     imprimir_resultado(mejor_camino, " -> ")
+    
     _ULTIMA_RUTA_[0] = mejor_camino
 
 def centralidad(comando, ciudades, vuelos):

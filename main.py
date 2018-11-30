@@ -81,6 +81,7 @@ def camino_escalas(comando, ciudades, vuelos):
             mejor_camino = camino
             mejor_distancia = distancia
     imprimir_resultado(mejor_camino, " -> ")
+
     _ULTIMA_RUTA_[0] = mejor_camino
 
 def centralidad(comando, ciudades, vuelos):
@@ -95,7 +96,7 @@ def centralidad(comando, ciudades, vuelos):
     los vuelos.
     """
     n = int(comando)
-    grafo = armar_grafo(ciudades, vuelos, "vuelos")
+    grafo = armar_grafo(ciudades, vuelos, "cantidad")
     lista = []
     resultado = []
     centrales = centralidad_aux(grafo)
@@ -108,7 +109,8 @@ def centralidad(comando, ciudades, vuelos):
         n -= 1
 
     imprimir_resultado(resultado, ", ")
-    return
+
+    _ULTIMA_RUTA_[0] = resultado
 
 def centralidad_aprox(comando, ciudades, vuelos):
     """
@@ -123,16 +125,20 @@ def centralidad_aprox(comando, ciudades, vuelos):
     """
     grafo = armar_grafo(ciudades, vuelos, "cent_aprox")
     origen = grafo.obtener_vertice_aleatorio()
-    k=20
+    k=500 #Cantidad de iteraciones para converger
     apariciones = {}
     lista = []
     resultado = []
     n = int(comando)
+
     for v in grafo:
         apariciones[v] = 0
+
     random_walks(grafo, origen, apariciones, k)
+
     for x in apariciones:
         lista.append([x, apariciones[x]])
+
     lista.sort(reverse=True, key=itemgetter(1))
     for i in lista:
         if n < 1: break
@@ -140,12 +146,8 @@ def centralidad_aprox(comando, ciudades, vuelos):
         n -= 1
 
     imprimir_resultado(resultado, ", ")
-    #Crear un grafo con cantidad de vuelos como peso
-    #Elegir un vertice vertice aleatorio
-    #Llamar a Random_Walks para ese vertice
-    #Realizar este ciclo K veces
-    #Devolver la lista generada
-    return
+    
+    _ULTIMA_RUTA_[0] = resultado
 
 def pagerank(comando, ciudades, vuelos):
     """
@@ -160,17 +162,11 @@ def pagerank(comando, ciudades, vuelos):
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     cantidad = int(comando)
-    lista_aeropuertos = calc_prank(grafo)
+    resultado = calc_prank(grafo, 20, cantidad)
 
-    if cantidad > len(lista_aeropuertos):
-        cantidad = len(lista_aeropuertos)
+    imprimir_resultado(resultado, ', ')
 
-    for i in range(cantidad-1):
-        print(lista_aeropuertos[i][0], end=", ")
-    #Se puede cambiar por imprimir_resultado pero hay que modificar
-    #el cómo crear la lista
-
-    print(lista_aeropuertos[cantidad-1][0])
+    _ULTIMA_RUTA_[0] = resultado
 
 def nueva_aerolinea(comando, ciudades, vuelos):
     """
@@ -190,12 +186,12 @@ def nueva_aerolinea(comando, ciudades, vuelos):
     """
     archivo = comando
     grafo = armar_grafo(ciudades, vuelos, "barato")
-    ab_min = prim(grafo, grafo.obtener_vertice_aleatorio())
+    ab_min = prim(grafo, grafo.obtener_vertice_aleatorio(), False)
 
     escribir_archivo(archivo, ab_min, vuelos)
     print("OK")
 
-def recorrer_mundo(comando, ciudades, vuelos):
+def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo
     para visitar todas las ciudades del mundo, demorando lo menos posible.
@@ -207,37 +203,26 @@ def recorrer_mundo(comando, ciudades, vuelos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    grafo = armar_grafo(ciudades, vuelos, "rapido")
-    #pdb.set_trace()
-    visitados = {}
-    a_apariciones = {}
-    resultado = []
     origen = comando
-    d_actual = []
-    d_actual.append(0)
-    a_origen = ciudades[origen].ver_aeropuertos()
-    #print(a_origen)
-    #for a in grafo:
-    #    a_apariciones[a] = 0
-    for a in a_origen:
-        mejor_camino, d_referencia = recorrer_mundo_aprox(origen, ciudades, vuelos, aeropuertos)
-        print(d_referencia)
-        for w in grafo.adyacentes(a):
-            visitados[aeropuertos[a][0]] = True
-            d_actual[0] = 0
-            visitados.clear()
-            for a in a_apariciones:
-                a_apariciones[a] = 0
-            resultado.clear()
-            rec_recursivo(grafo, w, None, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades)
-            if d_actual[0] < d_referencia:
-                d_referencia = d_actual[0]
-                mejor_camino = resultado
-                print("Cambio la distancia, nueva distancia: " + str(d_referencia))
 
-    print(mejor_camino)
-    print(d_referencia)
-    return
+    visitados = {}
+    for ciudad in ciudades:
+        visitados[ciudad] = 0
+    visitados[origen] = 1
+
+    peso_minimo = obtener_minimo(grafo)
+    solucion = [[]]
+    dist_actual = [0]
+    dist_referencia = [0]
+    aeros_ciudad = ciudades[origen].ver_aeropuertos()
+    mejor_camino, dist_referencia[0] = recorrer_mundo_aprox_aux(origen, ciudades, vuelos, aeropuertos)
+
+    for aero_origen in aeros_ciudad:
+        n = [0]
+        recorrido = [aero_origen]
+        rec_recursivo(grafo, aero_origen, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion,peso_minimo)
+
+    print(solucion[0])
 
 def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     """
@@ -251,53 +236,9 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     También recibe dos diccionarios con la informacion de las ciudades y
     los vuelos.
     """
-    grafo = armar_grafo(ciudades, vuelos, "rapido")
-    ciudad_origen = comando
-    visitados = {}
-    a_visitados = {}
-    resultado = []
-    padres = {}
-    aeropuertos_ciudad = ciudades[ciudad_origen].ver_aeropuertos()
-    distancia_inicial = math.inf
-
-    for v in aeropuertos_ciudad:
-        for w in grafo.adyacentes(v):
-            if grafo.peso_arista(v, w) < distancia_inicial:
-                distancia_inicial = grafo.peso_arista(v, w)
-                aeropuerto_origen = v
-
-    visitados[aeropuertos[aeropuerto_origen][0]] = True
-    padres[aeropuerto_origen] = None
-    arbol = prim(grafo, aeropuerto_origen)
-    recorrer_recursivo(arbol, aeropuerto_origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-
-    #imprimir_resultado(resultado, " -> ")
-    """
-    for i in range(len(resultado)-1):
-        try:
-             grafo.peso_arista(resultado[i], resultado[i+1])
-        except:
-            print("Hubo problemas conectando estos aeropuertos: ")
-            print(resultado[i] + ", " + resultado[i+1])
-            problemas.append(resultado[i-2])
-            problemas.append(resultado[i-1])
-            problemas.append(resultado[i])
-            problemas.append(resultado[i+1])
-            break
-    for v in problemas:
-        print(v, end=": ")
-        for w in grafo.adyacentes(v):
-            print(w, end=", ")
-        print("\n")
-    chequeo = []
-    for x in resultado:
-        chequeo.append(aeropuertos[x][0])
-    for a in ciudades:
-        if a not in chequeo: print(a)
-    """
-    distancia = reconstruir_distancia(arbol, resultado)
-    #print(distancia)
-    return resultado, distancia
+    resultado, distancia = recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos)
+    imprimir_resultado(resultado, " -> ")
+    print(distancia)
 
 def vacaciones(comando, ciudades, vuelos):
     """
@@ -326,6 +267,7 @@ def vacaciones(comando, ciudades, vuelos):
         if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):
             recorrido.append(origen)
             imprimir_resultado(recorrido, " -> ")
+            _ULTIMA_RUTA_[0] = recorrido
             return
 
     print("No se encontró recorrido")
@@ -404,7 +346,6 @@ def exportar_kml(comando, aeropuertos):
             f.write(abrir_linea + "\n")
             f.write("\t\t\t\t" + str(aeropuertos[anterior][1]) + ", " + str(aeropuertos[anterior][2]) + " " + str(aeropuertos[aeropuerto][1]) + ", " + str(aeropuertos[aeropuerto][2]) + "\n")
             f.write(cerrar_linea + "\n")
-        #linea
         f.write(cerrar_documento + "\n")
 
 ###
@@ -428,8 +369,8 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'centralidad_aprox'): centralidad_aprox(comando[1], ciudades, vuelos)
         elif (comando[0] == 'pagerank'): pagerank(comando[1], ciudades, vuelos)
         elif (comando[0] == 'nueva_aerolinea'): nueva_aerolinea(comando[1], ciudades, vuelos)
-        elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos)
-        elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos)
+        elif (comando[0] == 'recorrer_mundo'): recorrer_mundo(comando[1], ciudades, vuelos, aeropuertos)
+        elif (comando[0] == 'recorrer_mundo_aprox'): recorrer_mundo_aprox(comando[1], ciudades, vuelos, aeropuertos)
         elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
         elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
         elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)

@@ -53,6 +53,12 @@ class Grafo:
         else:
             raise Exception()
 
+    def aristas(self):
+        """
+        Devuelve una lista de las aristas (diccionario).
+        """
+        return list(self.vertices.values())
+
     def eliminar_vertice(self, vertice):
         """
         Recibe un vertice y lo elimina.
