@@ -8,6 +8,7 @@ from ciudad import *
 from operator import itemgetter
 import sys
 import math
+import random
 from time import sleep
 
 def todos_visitados(visitados):

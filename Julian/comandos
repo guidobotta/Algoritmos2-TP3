@@ -6,3 +6,4 @@ camino_mas barato,San Diego,New York
 itinerario itinerario_ejemplo.csv
 centralidad 5
 centralidad_aprox 5
+recorrer_mundo_aprox San Diego

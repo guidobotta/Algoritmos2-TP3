@@ -123,7 +123,7 @@ def centralidad_aprox(comando, ciudades, vuelos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "cent_aprox")
-    origen = grafo.vertice_aleatorio()
+    origen = grafo.obtener_vertice_aleatorio()
     k=20
     apariciones = {}
     lista = []
@@ -211,7 +211,7 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     dist_actual = [0]
     dist_referencia = [0]
     aeros_ciudad = ciudades[origen].ver_aeropuertos()
-    mejor_camino, dist_referencia[0] = recorrer_mundo_aprox(origen, ciudades, vuelos, aeropuertos)
+    mejor_camino, dist_referencia[0] = recorrer_mundo_aprox_aux(origen, ciudades, vuelos, aeropuertos)
 
     for aero_origen in aeros_ciudad:
         n = [0]
@@ -220,18 +220,7 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
 
     print(solucion[0])
 
-def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
-    """
-    Devuelve una lista en orden de cómo debemos movernos por el mundo
-    para visitar todas las ciudades del mundo, demorando aproximadamente
-    lo menos posible.
-
-    Recibe una linea de comandos de la siguiente forma:
-    "ciudad_origen"
-
-    También recibe dos diccionarios con la informacion de las ciudades y
-    los vuelos.
-    """
+def recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos):
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     ciudad_origen = comando
     visitados = {}
@@ -251,34 +240,24 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     padres[aeropuerto_origen] = None
     arbol = prim(grafo, aeropuerto_origen)
     recorrer_recursivo(arbol, aeropuerto_origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados)
-
-    #imprimir_resultado(resultado, " -> ")
-    """
-    for i in range(len(resultado)-1):
-        try:
-             grafo.peso_arista(resultado[i], resultado[i+1])
-        except:
-            print("Hubo problemas conectando estos aeropuertos: ")
-            print(resultado[i] + ", " + resultado[i+1])
-            problemas.append(resultado[i-2])
-            problemas.append(resultado[i-1])
-            problemas.append(resultado[i])
-            problemas.append(resultado[i+1])
-            break
-    for v in problemas:
-        print(v, end=": ")
-        for w in grafo.adyacentes(v):
-            print(w, end=", ")
-        print("\n")
-    chequeo = []
-    for x in resultado:
-        chequeo.append(aeropuertos[x][0])
-    for a in ciudades:
-        if a not in chequeo: print(a)
-    """
     distancia = reconstruir_distancia(arbol, resultado)
-    #print(distancia)
     return resultado, distancia
+
+def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
+    """
+    Devuelve una lista en orden de cómo debemos movernos por el mundo
+    para visitar todas las ciudades del mundo, demorando aproximadamente
+    lo menos posible.
+
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen"
+
+    También recibe dos diccionarios con la informacion de las ciudades y
+    los vuelos.
+    """
+    resultado, distancia = recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos)
+    imprimir_resultado(resultado, " -> ")
+    print(distancia)
 
 
 def vacaciones(comando, ciudades, vuelos):
