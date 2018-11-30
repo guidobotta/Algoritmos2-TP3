@@ -8,36 +8,61 @@ from ciudad import *
 from operator import itemgetter
 import sys
 import math
+from time import sleep
 
+def todos_visitados(visitados):
+    for city in visitados:
+        if visitados[city] == 0:
+            return False
+    return True
 
+def sin_visitar(visitados):
+    n = 0
+    for city in visitados:
+        if visitados[city] == 0:
+            n+=1
+    return n
 
-def rec_recursivo(grafo, v, origen, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades):
-    numero = 0
-    numero = a_apariciones[v]
-    a_apariciones[v] = numero + 1
-    ciudad = aeropuertos[v][0]
-    visitados[ciudad] = True
-    resultado.append(v)
-    if len(visitados) == len(ciudades): return
-    if a_apariciones[v] > 30: return
-    #print(d_actual[0])
-    if d_actual[0] < d_referencia:
-        for w in grafo.adyacentes(v):
-            d_actual[0] += grafo.peso_arista(v, w)
-            rec_recursivo(grafo, w, v, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades)
-    else:
-        resultado.pop()
-        numero = a_apariciones[v]
-        a_apariciones[v] = numero - 1
-        eliminar = True
-        for x in ciudades[ciudad]:
-            if x[0] in a_apariciones:
-                if a_apariciones[x[0]] != 0: eliminar = False
-        if eliminar:
-            visitados.pop(ciudad)
-        if not origen: return
-        d_actual[0] -= grafo.peso_arista(origen, v)
-    return
+def obtener_minimo(grafo):
+    aristas = grafo.aristas()
+    peso = math.inf
+    for arista in aristas:
+        for vertice in arista:
+            if arista[vertice] < peso:
+                peso = arista[vertice]
+    return peso
+
+def imprimir_progreso(visitados):
+    n = 0
+    for city in visitados:
+        if visitados[city] != 0:
+            n+=1
+    print(f"Progreso... {(n/len(visitados))*100}% \n {n}/{len(visitados)} Ciudades Visitadas")
+
+def rec_recursivo(grafo, vertice, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion,peso_minimo,n):
+    if todos_visitados(visitados):
+        if dist_actual[0] > dist_referencia[0]:
+            return False
+        else:
+            dist_referencia[0] = dist_actual[0]
+            solucion[0] = recorrido[:]
+            print(dist_actual)
+
+    if (dist_actual[0] + peso_minimo*sin_visitar(visitados)) > dist_referencia[0]:
+        return False
+    if n[0]%10000 == 0:
+        imprimir_progreso(visitados)
+    for ady in grafo.adyacentes(vertice):
+        if (len(recorrido) > 4) and ((ady == recorrido[-2]) and (vertice == recorrido[-3])):
+            continue
+        recorrido.append(ady)
+        visitados[aeropuertos[ady][0]] += 1
+        dist_actual[0] += grafo.peso_arista(vertice, ady)
+        n[0] += 1
+        if not rec_recursivo(grafo, ady, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion,peso_minimo,n):
+            recorrido.pop()
+            visitados[aeropuertos[ady][0]] -= 1
+            dist_actual[0] -= grafo.peso_arista(vertice, ady)
 
 def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
     v = origen

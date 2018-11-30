@@ -199,40 +199,26 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     los vuelos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
-    pdb.set_trace()
-    visitados = {}
-    a_apariciones = {}
-    resultado = []
     origen = comando
-    d_actual = []
-    d_actual.append(0)
-    a_origen = ciudades[origen].ver_aeropuertos()
-    #print(a_origen)
-    #print(a_origen)
-    for a in grafo:
-        a_apariciones[a] = 0
-    for a in a_origen:
-        mejor_camino, d_referencia = recorrer_mundo_aprox(origen, ciudades, vuelos, aeropuertos)
-        #print(d_referencia)
-        for w in grafo.adyacentes(a):
-        #    print(w)
-            d_actual[0] = 0
-            visitados.clear()
-            for i in a_apariciones:
-                a_apariciones[i] = 0
-            resultado.clear()
-            resultado.append(a)
-            visitados[aeropuertos[a][0]] = True
-            rec_recursivo(grafo, w, None, resultado, visitados, d_actual, d_referencia, a_apariciones, aeropuertos, ciudades)
-            if d_actual[0] < d_referencia:
-                d_referencia = d_actual[0]
-                mejor_camino = resultado
-                print("Cambio la distancia, nueva distancia: " + str(d_referencia))
 
-    print(mejor_camino)
-    print(d_referencia)
+    visitados = {}
+    for ciudad in ciudades:
+        visitados[ciudad] = 0
+    visitados[origen] = 1
 
-    return
+    peso_minimo = obtener_minimo(grafo)
+    solucion = [[]]
+    dist_actual = [0]
+    dist_referencia = [0]
+    aeros_ciudad = ciudades[origen].ver_aeropuertos()
+    mejor_camino, dist_referencia[0] = recorrer_mundo_aprox(origen, ciudades, vuelos, aeropuertos)
+
+    for aero_origen in aeros_ciudad:
+        n = [0]
+        recorrido = [aero_origen]
+        rec_recursivo(grafo, aero_origen, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion,peso_minimo,n)
+
+    print(solucion[0])
 
 def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     """
@@ -429,7 +415,6 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
     elif (comando[0] == 'vacaciones'): vacaciones(comando[1], ciudades, vuelos)
     elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
     elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
-    else: raise Exception()
     print(f"Tardo: {time()-tiempo}seg")
 
 
