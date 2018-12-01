@@ -199,8 +199,8 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     Recibe una linea de comandos de la siguiente forma:
     "ciudad_origen"
 
-    También recibe dos diccionarios con la informacion de las ciudades y
-    los vuelos.
+    También recibe tres diccionarios con la informacion de las ciudades,
+    los vuelos y los aeropuertos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     origen = comando
@@ -218,11 +218,11 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     mejor_camino, dist_referencia[0] = recorrer_mundo_aprox_aux(origen, ciudades, vuelos, aeropuertos)
 
     for aero_origen in aeros_ciudad:
-        n = [0]
         recorrido = [aero_origen]
         rec_recursivo(grafo, aero_origen, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion,peso_minimo)
 
-    print(solucion[0])
+    imprimir_resultado(solucion[0], ' -> ')
+    print("Costo: {}".format(dist_referencia[0]))
 
 def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     """
@@ -233,12 +233,12 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     Recibe una linea de comandos de la siguiente forma:
     "ciudad_origen"
 
-    También recibe dos diccionarios con la informacion de las ciudades y
-    los vuelos.
+    También recibe tres diccionarios con la informacion de las ciudades,
+    los vuelos y los aeropuertos.
     """
     resultado, distancia = recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos)
     imprimir_resultado(resultado, " -> ")
-    print(distancia)
+    print("Costo: {}".format(distancia))
 
 def vacaciones(comando, ciudades, vuelos):
     """
@@ -301,6 +301,11 @@ def itinerario_cultural(comando, ciudades, vuelos):
 def exportar_kml(comando, aeropuertos):
     """
     Exporta la ruta del último comando ejecutado a un archivo KML.
+    
+    Recibe una linea de comando de la forma:
+    "ruta_archivo_de_salida.kml"
+
+    También recibe un diccionario con la información de los aeropuertos.
     """
     ruta = _ULTIMA_RUTA_[0]
     encabezado = \
@@ -352,8 +357,6 @@ def exportar_kml(comando, aeropuertos):
 #   EJECUTADOR
 ###
 
-from time import time
-
 def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     Recibe una linea y ejecuta la operación correspondiente.
@@ -361,7 +364,6 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
     """
     comando = linea.split(' ', 1)
     try:
-        tiempo = time()
         if (comando[0] == 'listar_operaciones'): listar_operaciones()
         elif (comando[0] == 'camino_mas'): camino_mas(comando[1], ciudades, vuelos)
         elif (comando[0] == 'camino_escalas'): camino_escalas(comando[1], ciudades, vuelos)
@@ -375,7 +377,6 @@ def ejecutar(linea, ciudades, vuelos, aeropuertos):
         elif (comando[0] == 'itinerario'): itinerario_cultural(comando[1], ciudades, vuelos)
         elif (comando[0] == 'exportar_kml'): exportar_kml(comando[1], aeropuertos)
         else: raise Exception()
-        print(f"Tardo: {time()-tiempo}seg")
     except:
         print("Error en comando {}".format(comando[0]))
 

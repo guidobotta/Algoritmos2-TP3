@@ -35,6 +35,10 @@ def cargar_ciudades_y_aeropuertos(archivo_1):
     return ciudades, aeropuertos
 
 def clave_vuelo(aeropuerto1, aeropuerto2):
+    """
+    Genera la clave vuelo y la devuelve.
+    Recibe dos aeropuertos (strings).
+    """
     return aeropuerto1 + "|" + aeropuerto2
 
 def cargar_vuelos(archivo_2):
@@ -176,6 +180,9 @@ def filtrar_infinitos(distancia):
         if distancia[v] == math.inf: distancia.pop(v)
 
 def centralidad_aux(grafo):
+    """
+    Recibe un grafo y calcula la centralidad de los aeropuertos.
+    """
     cent = {}
     for v in grafo: cent[v] = 0
 
@@ -206,6 +213,11 @@ def centralidad_aux(grafo):
 ###
 
 def random_walks(grafo, origen, apariciones, k):
+    """
+    Recibe un grafo, un vertice de origen, un diccionario de apariciones y
+    un número k, que es la cantidad de veces que debe aplicarse random_walks
+    para converger.
+    """
     #Contador de apariciones de un vertice
     for a in range(k):
         pesos = {}
@@ -215,7 +227,10 @@ def random_walks(grafo, origen, apariciones, k):
         apariciones[origen] += 1
 
 def vertice_aleatorio(pesos):
-    #Pesos es un diccionario de pesos, clave vértice vecino, valor el peso.
+    """
+    Recibe un diccionario de pesos de la forma {vertice vecino: peso}.
+    Devuelve un vertice aleatorio.
+    """
     total = sum(pesos.values())
     rand = random.uniform(0, total)
     acum = 0
@@ -230,8 +245,11 @@ def vertice_aleatorio(pesos):
 
 def calc_prank(grafo, k, cantidad):
     """
-    Recibe un grafo de aeropuertos.
-    Devuelve una lista ordenada de los mas importantes.
+    Recibe un grafo de aeropuertos, un número 'k', que es la cantidad de
+    veces que es necesario aplicar pagerank para que converja, y un
+    número 'cantidad', que es la cantidad de aeropuertos a mostrar.
+    Devuelve una lista ordenada de los 'cantidad' aeropuertos mas 
+    importantes.
     """
     prank = {}
     for v in grafo:
@@ -247,7 +265,10 @@ def calc_prank(grafo, k, cantidad):
     for aero in prank:
         lista.append((aero, prank[aero]))
     lista.sort(key=itemgetter(1), reverse=True)
-    return lista[:cantidad]
+    resultado = []
+    for i in range(cantidad):
+        resultado.append(lista[i][0])
+    return resultado
 
 ###
 #   Nueva Aerolinea
@@ -327,12 +348,21 @@ def escribir_archivo(archivo, ab_min, vuelos):
 ###
 
 def todos_visitados(visitados):
+    """
+    Recibe un diccionario de visitados de la forma {ciudad: numero}.
+    Devuelve True si están todos visitados (distinto de 0), o False
+    en caso contrario.
+    """
     for city in visitados:
         if visitados[city] == 0:
             return False
     return True
 
 def sin_visitar(visitados):
+    """
+    Recibe un diccionario de visitados de la forma {ciudad: numero}.
+    Devuelve la cantidad de ciudades no visitadas (numero == 0).
+    """
     n = 0
     for city in visitados:
         if visitados[city] == 0:
@@ -340,6 +370,9 @@ def sin_visitar(visitados):
     return n
 
 def obtener_minimo(grafo):
+    """
+    Recibe un grafo y devuelve el peso mínimo entre sus aristas.
+    """
     aristas = grafo.aristas()
     peso = math.inf
     for arista in aristas:
@@ -349,13 +382,18 @@ def obtener_minimo(grafo):
     return peso
 
 def rec_recursivo(grafo, vertice, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion, peso_minimo):
+    """
+    Recibe un grafo, un vertice, un diccionario de aeropuertos, un diccionario
+    de visitados, una lista que irá obteniendo el recorrido, la distancia
+    actual, la distancia de referencia(el tope), una lista solucion que será
+    la solución definitiva, y el peso minimo del grafo.
+    """
     if todos_visitados(visitados):
         if dist_actual[0] > dist_referencia[0]:
             return False
         else:
             dist_referencia[0] = dist_actual[0]
             solucion[0] = recorrido[:]
-            print(dist_actual)
 
     if (dist_actual[0] + peso_minimo*sin_visitar(visitados)) > dist_referencia[0]:
         return False
@@ -366,7 +404,6 @@ def rec_recursivo(grafo, vertice, aeropuertos, visitados, recorrido, dist_actual
         recorrido.append(ady)
         visitados[aeropuertos[ady][0]] += 1
         dist_actual[0] += grafo.peso_arista(vertice, ady)
-        n[0] += 1
         if not rec_recursivo(grafo, ady, aeropuertos, visitados, recorrido, dist_actual, dist_referencia, solucion, peso_minimo):
             recorrido.pop()
             visitados[aeropuertos[ady][0]] -= 1
@@ -378,7 +415,10 @@ def rec_recursivo(grafo, vertice, aeropuertos, visitados, recorrido, dist_actual
 
 def recorrer_recursivo(grafo, origen, aeropuertos, visitados, resultado, padres, ciudades, a_visitados):
     """
-
+    Recibe un grafo, un vértice de origen, un diccionario de aeropuertos,
+    un diccionario de visitados, una lista resultado, un diccionario de
+    padres, un diccionario de ciudades, y un diccionario de aeropuertos
+    visitados.
     """
     v = origen
     adyacentes = []
@@ -419,7 +459,11 @@ def reconstruir_distancia(grafo, camino):
 
 def recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos):
     """
-
+    Función auxiliar de recorrer_mundo_aprox.
+    Recibe una linea de comandos de la siguiente forma:
+    "ciudad_origen"
+    También recibe tres diccionarios con la informacion de las ciudades,
+    los vuelos y los aeropuertos.
     """
     grafo = armar_grafo(ciudades, vuelos, "rapido")
     ciudad_origen = comando
