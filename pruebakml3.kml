@@ -1,0 +1,1291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+        <Document>
+		<name>Ruta de vuelo</name>
+		<Placemark>
+                    <name>
+			JFK
+		    </name>
+                    <Point>
+                        <coordinates>
+				-73.77893, 40.63975
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			AUS
+		    </name>
+                    <Point>
+                        <coordinates>
+				-97.66987, 30.19453
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			LAX
+		    </name>
+                    <Point>
+                        <coordinates>
+				-118.40807, 33.94254
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ASE
+		    </name>
+                    <Point>
+                        <coordinates>
+				-106.86885, 39.22316
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			DEN
+		    </name>
+                    <Point>
+                        <coordinates>
+				-104.66700, 39.85841
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			AMA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-101.70593, 35.21937
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			DAL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-96.85177, 32.84711
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ABQ
+		    </name>
+                    <Point>
+                        <coordinates>
+				-106.60919, 35.04022
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			HOU
+		    </name>
+                    <Point>
+                        <coordinates>
+				-95.27889, 29.64542
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BHM
+		    </name>
+                    <Point>
+                        <coordinates>
+				-86.75355, 33.56294
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MIA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-80.29056, 25.79325
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BDL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-72.68323, 41.93887
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			IAD
+		    </name>
+                    <Point>
+                        <coordinates>
+				-77.45581, 38.94453
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ALB
+		    </name>
+                    <Point>
+                        <coordinates>
+				-73.80298, 42.74812
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MCO
+		    </name>
+                    <Point>
+                        <coordinates>
+				-81.31603, 28.42889
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ACY
+		    </name>
+                    <Point>
+                        <coordinates>
+				-74.57717, 39.45758
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			RSW
+		    </name>
+                    <Point>
+                        <coordinates>
+				-81.75517, 26.53617
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BNA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-86.67818, 36.12448
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			DTW
+		    </name>
+                    <Point>
+                        <coordinates>
+				-83.34884, 42.21206
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ABE
+		    </name>
+                    <Point>
+                        <coordinates>
+				-75.44040, 40.65236
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ATL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-84.42694, 33.64044
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			AEX
+		    </name>
+                    <Point>
+                        <coordinates>
+				-92.54856, 31.32737
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			DFW
+		    </name>
+                    <Point>
+                        <coordinates>
+				-97.03720, 32.89595
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BIS
+		    </name>
+                    <Point>
+                        <coordinates>
+				-100.74672, 46.77411
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MSP
+		    </name>
+                    <Point>
+                        <coordinates>
+				-93.21692, 44.88055
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ANC
+		    </name>
+                    <Point>
+                        <coordinates>
+				-149.99619, 61.17432
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SEA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-122.30931, 47.44898
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BIL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-108.54286, 45.80766
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SLC
+		    </name>
+                    <Point>
+                        <coordinates>
+				-111.97777, 40.78839
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BOS
+		    </name>
+                    <Point>
+                        <coordinates>
+				-71.00518, 42.36435
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MYR
+		    </name>
+                    <Point>
+                        <coordinates>
+				-78.92833, 33.67975
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CLE
+		    </name>
+                    <Point>
+                        <coordinates>
+				-81.84940, 41.41089
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			IAH
+		    </name>
+                    <Point>
+                        <coordinates>
+				-95.33972, 29.98047
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BOI
+		    </name>
+                    <Point>
+                        <coordinates>
+				-116.22278, 43.56444
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SFO
+		    </name>
+                    <Point>
+                        <coordinates>
+				-122.37484, 37.61900
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BFL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-119.05677, 35.43360
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			PHX
+		    </name>
+                    <Point>
+                        <coordinates>
+				-112.00806, 33.43417
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BUF
+		    </name>
+                    <Point>
+                        <coordinates>
+				-78.73217, 42.94052
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			EWR
+		    </name>
+                    <Point>
+                        <coordinates>
+				-74.16866, 40.69250
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BQN
+		    </name>
+                    <Point>
+                        <coordinates>
+				-67.12944, 18.49486
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			FLL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-80.15275, 26.07258
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BWI
+		    </name>
+                    <Point>
+                        <coordinates>
+				-76.66820, 39.17540
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ORD
+		    </name>
+                    <Point>
+                        <coordinates>
+				-87.90446, 41.97960
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BTV
+		    </name>
+                    <Point>
+                        <coordinates>
+				-73.15031, 44.47300
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			LGA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-73.87261, 40.77724
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CAE
+		    </name>
+                    <Point>
+                        <coordinates>
+				-81.11954, 33.93884
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			RIC
+		    </name>
+                    <Point>
+                        <coordinates>
+				-77.31967, 37.50517
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CVG
+		    </name>
+                    <Point>
+                        <coordinates>
+				-84.66217, 39.04614
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			TPA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-82.53325, 27.97547
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CMH
+		    </name>
+                    <Point>
+                        <coordinates>
+				-82.89188, 39.99799
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CLT
+		    </name>
+                    <Point>
+                        <coordinates>
+				-80.94313, 35.21401
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MDW
+		    </name>
+                    <Point>
+                        <coordinates>
+				-87.75242, 41.78598
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			CHS
+		    </name>
+                    <Point>
+                        <coordinates>
+				-80.04051, 32.89865
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			OKC
+		    </name>
+                    <Point>
+                        <coordinates>
+				-97.60073, 35.39309
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			LAS
+		    </name>
+                    <Point>
+                        <coordinates>
+				-115.15233, 36.08036
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BLI
+		    </name>
+                    <Point>
+                        <coordinates>
+				-122.53753, 48.79275
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			HNL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-157.92241, 21.31869
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ITO
+		    </name>
+                    <Point>
+                        <coordinates>
+				-155.04847, 19.72026
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			OGG
+		    </name>
+                    <Point>
+                        <coordinates>
+				-156.43046, 20.89865
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			KOA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-156.04563, 19.73877
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SAN
+		    </name>
+                    <Point>
+                        <coordinates>
+				-117.18966, 32.73356
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			FAT
+		    </name>
+                    <Point>
+                        <coordinates>
+				-119.71814, 36.77619
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			PDX
+		    </name>
+                    <Point>
+                        <coordinates>
+				-122.59750, 45.58872
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			LIH
+		    </name>
+                    <Point>
+                        <coordinates>
+				-159.33896, 21.97598
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			OAK
+		    </name>
+                    <Point>
+                        <coordinates>
+				-122.22072, 37.72129
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			BUR
+		    </name>
+                    <Point>
+                        <coordinates>
+				-118.35850, 34.20062
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SJC
+		    </name>
+                    <Point>
+                        <coordinates>
+				-121.92901, 37.36186
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			ONT
+		    </name>
+                    <Point>
+                        <coordinates>
+				-117.60119, 34.05600
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			SMF
+		    </name>
+                    <Point>
+                        <coordinates>
+				-121.59077, 38.69542
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			PHL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-75.24114, 39.87195
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			DCA
+		    </name>
+                    <Point>
+                        <coordinates>
+				-77.03772, 38.85208
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			PBI
+		    </name>
+                    <Point>
+                        <coordinates>
+				-80.09559, 26.68316
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			TTN
+		    </name>
+                    <Point>
+                        <coordinates>
+				-74.81347, 40.27669
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			STL
+		    </name>
+                    <Point>
+                        <coordinates>
+				-90.35999, 38.74769
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			MSY
+		    </name>
+                    <Point>
+                        <coordinates>
+				-90.25803, 29.99339
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <name>
+			JFK
+		    </name>
+                    <Point>
+                        <coordinates>
+				-73.77893, 40.63975
+			</coordinates>
+                    </Point>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -97.66987, 30.19453
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -118.40807, 33.94254
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -106.86885, 39.22316
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -104.66700, 39.85841
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -101.70593, 35.21937
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -96.85177, 32.84711
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -106.60919, 35.04022
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -95.27889, 29.64542
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -86.75355, 33.56294
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -80.29056, 25.79325
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -72.68323, 41.93887
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -77.45581, 38.94453
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -73.80298, 42.74812
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -81.31603, 28.42889
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -74.57717, 39.45758
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -81.75517, 26.53617
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -86.67818, 36.12448
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -83.34884, 42.21206
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -75.44040, 40.65236
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -84.42694, 33.64044
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -92.54856, 31.32737
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -97.03720, 32.89595
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -100.74672, 46.77411
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -93.21692, 44.88055
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -149.99619, 61.17432
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -122.30931, 47.44898
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -108.54286, 45.80766
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -111.97777, 40.78839
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -71.00518, 42.36435
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -78.92833, 33.67975
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -81.84940, 41.41089
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -95.33972, 29.98047
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -116.22278, 43.56444
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -122.37484, 37.61900
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -119.05677, 35.43360
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -112.00806, 33.43417
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -78.73217, 42.94052
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -74.16866, 40.69250
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -67.12944, 18.49486
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -80.15275, 26.07258
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -76.66820, 39.17540
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -87.90446, 41.97960
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -73.15031, 44.47300
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -73.87261, 40.77724
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -81.11954, 33.93884
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -77.31967, 37.50517
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -84.66217, 39.04614
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -82.53325, 27.97547
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -82.89188, 39.99799
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -80.94313, 35.21401
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -87.75242, 41.78598
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -80.04051, 32.89865
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -97.60073, 35.39309
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -115.15233, 36.08036
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -122.53753, 48.79275
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -157.92241, 21.31869
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -155.04847, 19.72026
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -156.43046, 20.89865
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -156.04563, 19.73877
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -117.18966, 32.73356
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -119.71814, 36.77619
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -122.59750, 45.58872
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -159.33896, 21.97598
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -122.22072, 37.72129
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -118.35850, 34.20062
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -121.92901, 37.36186
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -117.60119, 34.05600
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -121.59077, 38.69542
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -75.24114, 39.87195
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -77.03772, 38.85208
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -80.09559, 26.68316
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -74.81347, 40.27669
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -90.35999, 38.74769
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -90.25803, 29.99339
+			</coordinates>
+                    </LineString>
+                </Placemark>
+		<Placemark>
+                    <LineString>
+                        <coordinates>
+				-73.77893, 40.63975 -73.77893, 40.63975
+			</coordinates>
+                    </LineString>
+                </Placemark>
+	</Document>
+    </kml>

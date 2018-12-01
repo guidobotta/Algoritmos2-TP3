@@ -224,6 +224,8 @@ def recorrer_mundo(comando, ciudades, vuelos, aeropuertos):
     imprimir_resultado(solucion[0], ' -> ')
     print("Costo: {}".format(dist_referencia[0]))
 
+    _ULTIMA_RUTA_[0] = solucion[0]
+
 def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     """
     Devuelve una lista en orden de cómo debemos movernos por el mundo
@@ -239,6 +241,8 @@ def recorrer_mundo_aprox(comando, ciudades, vuelos, aeropuertos):
     resultado, distancia = recorrer_mundo_aprox_aux(comando, ciudades, vuelos, aeropuertos)
     imprimir_resultado(resultado, " -> ")
     print("Costo: {}".format(distancia))
+
+    _ULTIMA_RUTA_[0] = resultado
 
 def vacaciones(comando, ciudades, vuelos):
     """
@@ -341,7 +345,7 @@ def exportar_kml(comando, aeropuertos):
             f.write(abrir_punto1 + "\n")
             f.write("\t\t\t" + aeropuerto + "\n")
             f.write(abrir_punto2 + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][1]) + ", " + str(aeropuertos[aeropuerto][2]) + "\n")
+            f.write("\t\t\t\t" + str(aeropuertos[aeropuerto][2]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
             f.write(cerrar_punto + "\n")
         anterior = None
         for aeropuerto in ruta:
@@ -349,9 +353,12 @@ def exportar_kml(comando, aeropuertos):
                 anterior = aeropuerto
                 continue
             f.write(abrir_linea + "\n")
-            f.write("\t\t\t\t" + str(aeropuertos[anterior][1]) + ", " + str(aeropuertos[anterior][2]) + " " + str(aeropuertos[aeropuerto][1]) + ", " + str(aeropuertos[aeropuerto][2]) + "\n")
+            f.write("\t\t\t\t" + str(aeropuertos[anterior][2]) + ", " + str(aeropuertos[anterior][1]) + " " + str(aeropuertos[aeropuerto][2]) + ", " + str(aeropuertos[aeropuerto][1]) + "\n")
             f.write(cerrar_linea + "\n")
+            anterior = aeropuerto
         f.write(cerrar_documento + "\n")
+    imprimir_resultado(ruta, ' -> ')
+    print("OK")
 
 ###
 #   EJECUTADOR
