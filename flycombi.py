@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 #Funciones auxiliares
 from funciones_auxiliares import *
 
@@ -9,7 +10,7 @@ _ULTIMA_RUTA_ = [[]]
 
 _LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
-"recorrer_mundo_aprox","vacaciones","itinerario_cultural","exportal_kml"]
+"recorrer_mundo_aprox","vacaciones","itinerario","exportar_kml"]
 
 ###
 #   FUNCIONES
