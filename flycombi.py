@@ -8,10 +8,10 @@ from funciones_auxiliares import *
 
 _ULTIMA_RUTA_ = [[]]
 
-_LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
+_LISTA_OPERACIONES_ = ["camino_mas","camino_escalas",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
-"recorrer_mundo_aprox","vacaciones","itinerario","exportar_kml"]
-
+"recorrer_mundo_aprox","itinerario","exportar_kml"]
+#"centralidad","vacaciones"
 ###
 #   FUNCIONES
 ###
@@ -301,7 +301,8 @@ def itinerario_cultural(comando, ciudades, vuelos):
     orden = orden_topologico(grafo)
     imprimir_resultado(orden, ", ")
     for i in range(len(orden)-1):
-        camino_mas("rapido,"+ orden[i] + "," + orden[i+1], ciudades, vuelos)
+        comando = ','.join(["rapido", orden[i], orden[i+1]])
+        camino_mas(comando, ciudades, vuelos)
 
 def exportar_kml(comando, aeropuertos):
     """

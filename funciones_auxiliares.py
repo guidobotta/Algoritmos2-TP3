@@ -322,21 +322,15 @@ def escribir_archivo(archivo, ab_min, vuelos):
     y un diccionario con vuelos y su información.
     Escribe un archivo .csv a la ruta indicada.
     """
-    visitados = set()
     with open(archivo, 'w') as arch:
         for v in ab_min:
-            if v in visitados:
-                continue
             aero_i = v
-            visitados.add(v)
             for w in ab_min.adyacentes(v):
-                if w in visitados:
-                    continue
-                visitados.add(w)
                 aero_j = w
                 clave = aero_i + "|" + aero_j
                 if clave not in vuelos:
                     clave = aero_j + "|" + aero_i
+                visitados.add(clave)
                 tiempo_promedio = vuelos[clave][0]
                 precio = vuelos[clave][1]
                 cant_vuelos = vuelos[clave][2]
@@ -501,6 +495,7 @@ def vacaciones_aux(origen, vertice, grafo, recorrido, cantidad):
     """
     if len(recorrido) == cantidad:
         return True
+        
     for ady in grafo.adyacentes(vertice):
         if ady not in recorrido:
             if len(recorrido) == cantidad-1:
