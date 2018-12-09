@@ -262,7 +262,7 @@ def vacaciones(comando, ciudades, vuelos):
     comandos = comando.split(",")
     cantidad = int(comandos[1])
     if cantidad < 1:
-        raise Exception()
+        raise Exception("El número de ciudades debe ser mayor a 0.")
     lista_aeropuertos = ciudades[comandos[0]].ver_aeropuertos()
     grafo = armar_grafo(ciudades,vuelos, "rapido")
     for ind_aero in range(len(lista_aeropuertos)):
