@@ -12,16 +12,15 @@ class Heap:
         cmp(a,b) > 0 si a > b
         """
         self.heap = []
-        self.cantidad = 0
         self.cmp = cmp
 
     def ver_cantidad(self):
         """Devuelve la cantidad de elementos."""
-        return self.cantidad
+        return len(self.heap)
 
     def esta_vacia(self):
         """Devuelve True si el Heap está vacío o False si no lo está."""
-        return self.cantidad == 0
+        return len(self.heap) == 0
 
     def swap(self, pos, padre):
         """Swapea al actual con su padre."""
@@ -30,7 +29,8 @@ class Heap:
     def up_heap(self, pos):
         """Aplica up_heap al actual"""
         padre = (pos-1)//2
-        if padre < 0 or self.cmp(self.heap[pos], self.heap[padre]) < 0: return
+        if (padre < 0) or (self.cmp(self.heap[pos], self.heap[padre]) < 0): 
+            return
         self.swap(padre, pos)
         self.up_heap(padre)
 
@@ -39,30 +39,31 @@ class Heap:
         hijo_izq = (2*pos) + 1
         hijo_der = (2*pos) + 2
 
-        if hijo_der < self.cantidad and self.cmp(self.heap[pos], self.heap[hijo_der]) < 0:
+        if (hijo_der < len(self.heap)) and (self.cmp(self.heap[pos], self.heap[hijo_der]) < 0):
+
             if self.cmp(self.heap[hijo_izq], self.heap[hijo_der]) > 0:
                 self.swap(pos, hijo_izq)
                 self.down_heap(hijo_izq)
+
             else:
                 self.swap(pos, hijo_der)
                 self.down_heap(hijo_der)
 
-        elif hijo_izq < self.cantidad and self.cmp(self.heap[pos], self.heap[hijo_izq]) < 0:
+        elif (hijo_izq < len(self.heap)) and (self.cmp(self.heap[pos], self.heap[hijo_izq]) < 0):
             self.swap(pos, hijo_izq)
             self.down_heap(hijo_izq)
 
     def encolar(self, elemento):
         """Recibe un elemento y lo encola"""
         self.heap.append(elemento)
-        self.up_heap(self.cantidad)
-        self.cantidad += 1
+        self.up_heap(len(self.heap)-1)
 
     def desencolar(self):
         """Desencola el máximo elemento y lo devuelve."""
         if self.esta_vacia():
             return None
-        self.cantidad -=1
-        valor = self.heap.pop(0)
+        self.swap(0, len(self.heap)-1)
+        valor = self.heap.pop()
         self.down_heap(0)
         return valor
 

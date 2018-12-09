@@ -8,10 +8,10 @@ from funciones_auxiliares import *
 
 _ULTIMA_RUTA_ = [[]]
 
-_LISTA_OPERACIONES_ = ["camino_mas","camino_escalas",\
+_LISTA_OPERACIONES_ = ["camino_mas","camino_escalas","centralidad",\
 "centralidad_aprox","pagerank","nueva_aerolinea","recorrer_mundo",\
-"recorrer_mundo_aprox","itinerario","exportar_kml"]
-#"centralidad","vacaciones"
+"recorrer_mundo_aprox","vacaciones","itinerario","exportar_kml"]
+
 ###
 #   FUNCIONES
 ###
@@ -260,13 +260,14 @@ def vacaciones(comando, ciudades, vuelos):
     los vuelos.
     """
     comandos = comando.split(",")
+    cantidad = int(comandos[1])
+    if cantidad < 1:
+        raise Exception()
     lista_aeropuertos = ciudades[comandos[0]].ver_aeropuertos()
+    grafo = armar_grafo(ciudades,vuelos, "rapido")
     for ind_aero in range(len(lista_aeropuertos)):
         #Pruebo a partir de cada uno de los aeropuertos de la ciudad
-        comandos = comando.split(',')
-        grafo = armar_grafo(ciudades,vuelos, "rapido")
         origen = lista_aeropuertos[ind_aero]
-        cantidad = int(comandos[1])
         recorrido = [origen]
 
         if vacaciones_aux(origen, origen, grafo, recorrido, cantidad):

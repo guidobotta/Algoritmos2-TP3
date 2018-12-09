@@ -322,6 +322,7 @@ def escribir_archivo(archivo, ab_min, vuelos):
     y un diccionario con vuelos y su información.
     Escribe un archivo .csv a la ruta indicada.
     """
+    visitados = set()
     with open(archivo, 'w') as arch:
         for v in ab_min:
             aero_i = v
